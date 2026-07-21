@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>1000 Words Polish English</title>
+  <style>
+    :root {
+      --bg: #f6f8ff;
+      --card: #ffffff;
+      --ink: #17324d;
+      --muted: #5e7489;
+      --accent: #2563eb;
+      --accent-2: #3b82f6;
+      --good: #16a34a;
+      --hard: #f59e0b;
+      --easy: #8b5cf6;
+      --border: #dce7f3;
+      --shadow: 0 12px 28px rgba(23, 50, 77, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #eef5ff 0%, var(--bg) 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom) 12px;
+    }
+    .app { max-width: 860px; margin: 0 auto; padding: 10px 0 24px; }
+    .hero {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+    }
+    .hero h1 { margin: 0 0 6px; font-size: 1.3rem; }
+    .hero p { margin: 0; font-size: 0.95rem; opacity: 0.95; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .stat strong { display: block; font-size: 1rem; margin-bottom: 2px; }
+    .stat span { font-size: 0.75rem; color: var(--muted); }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    select, button, textarea, input {
+      font: inherit;
+    }
+    select, textarea, input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: #fbfdff;
+      color: var(--ink);
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      min-height: 44px;
+      touch-action: manipulation;
+    }
+    button:active { transform: scale(0.98); }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-secondary { background: #eaf2ff; color: var(--accent); }
+    .btn-ghost { background: #f1f5f9; color: var(--ink); }
+    .btn-hard { background: var(--hard); color: white; }
+    .btn-good { background: var(--good); color: white; }
+    .btn-easy { background: var(--easy); color: white; }
+    .card {
+      border-radius: 22px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: cardIn 0.28s ease;
+      perspective: 1100px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(23, 50, 77, 0.14);
+    }
+    .card .label {
+      display: inline-flex;
+      align-self: flex-start;
+      background: #f2f7ff;
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .word { font-size: 1.7rem; font-weight: 800; text-align: center; margin-top: 6px; }
+    .sentence { font-size: 1rem; color: var(--muted); text-align: center; line-height: 1.45; }
+    .translation { font-size: 1.05rem; color: var(--ink); text-align: center; line-height: 1.45; }
+    .chip-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .pill { border-radius: 999px; background: #f1f5f9; padding: 6px 10px; font-size: 0.82rem; color: var(--muted); }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      min-height: 280px;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
+      transform-origin: center center;
+    }
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .card-face.back {
+      transform: rotateY(180deg);
+    }
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .hidden { display: none; }
+    .fade-in {
+      animation: fadeIn 0.24s ease;
+    }
+    .muted { color: var(--muted); }
+    .small { font-size: 0.86rem; }
+    .actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .import-area { margin-top: 8px; }
+    .import-area textarea { min-height: 120px; resize: vertical; }
+    .status { font-size: 0.92rem; color: var(--muted); margin-top: 8px; }
+    .progress-bar {
+      height: 8px; border-radius: 999px; background: #eaf2ff; overflow: hidden; margin-top: 8px;
+    }
+    .lesson-done {
+      color: var(--good);
+      font-weight: 700;
+    }
+    .progress-bar > div { height: 100%; background: linear-gradient(90deg, var(--accent), var(--good)); border-radius: inherit; }
+    .footer-note { font-size: 0.86rem; color: var(--muted); text-align: center; margin-top: 10px; }
+    .debug-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .debug-box strong { color: var(--ink); }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(6px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .actions { grid-template-columns: 1fr; }
+      .word { font-size: 1.45rem; }
+      .hero { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="hero">
+      <h1>1000 Words 💛</h1>
+      <p>Prosty system fiszek dla początkujących. Ucz się słówek po polsku i angielsku, krok po kroku.</p>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="panel">
+      <div class="row" style="justify-content: space-between; margin-bottom: 8px;">
+        <strong>Wybierz lekcję</strong>
+        <span class="small muted" id="lessonStatus">Gotowe do nauki</span>
+      </div>
+      <div class="row">
+        <select id="lessonSelect"></select>
+        <button class="btn-primary" id="learnBtn">Ucz się nowej lekcji</button>
+        <button class="btn-secondary" id="reviewBtn">Przeglądaj zaległe</button>
+      </div>
+      <div class="progress-bar"><div id="progressFill" style="width: 0%"></div></div>
+      <div class="status" id="sessionStatus">Wybierz lekcję i zacznij.</div>
+    </section>
+
+    <section class="panel">
+      <div class="card" id="cardBox">
+        <div class="card-inner" id="cardInner">
+          <div class="card-face front" id="cardFront">
+            <div class="label" id="cardLabel">Gotowy</div>
+            <div class="small muted" id="reviewInfo">Nowa karta</div>
+            <div>
+              <div class="word" id="wordText">Witaj!</div>
+              <div class="sentence" id="sentenceText">Tutaj zobaczysz angielskie słówko i przykładowe zdanie.</div>
+            </div>
+            <div class="chip-row">
+              <button class="btn-ghost" id="speakBtn" type="button">🔊 Wymowa</button>
+            </div>
+          </div>
+          <div class="card-face back" id="cardBack">
+            <div class="label" id="cardBackLabel">Odpowiedź</div>
+            <div>
+              <div class="translation" id="translationText">Tłumaczenie słówka</div>
+              <div class="sentence" id="sentencePlText">Tłumaczenie zdania</div>
+            </div>
+            <div class="chip-row">
+              <button class="btn-ghost" id="speakBtnBack" type="button">🔊 Wymowa</button>
+            </div>
+          </div>
+        </div>
+        <div class="actions hidden" id="ratingRow">
+          <button class="btn-hard" id="hardBtn">Trudne</button>
+          <button class="btn-good" id="goodBtn">Dobrze</button>
+          <button class="btn-easy" id="easyBtn">Łatwe</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="debug-box" id="debugBox">
+      <strong>Debug SRS</strong>
+      <div id="debugContent">Brak danych</div>
+    </div>
+    <div class="footer-note">Dane są zapisane lokalnie w Twojej przeglądarce. Nie musisz niczego instalować.</div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'polish-english-1000-words-v1';
+    const defaultLessons = Array.from({ length: 50 }, (_, index) => ({
+      id: index + 1,
+      title: `Lekcja ${index + 1}`,
+      cards: []
+    }));
+
+    const HARDCODED_LESSONS = {
+      1: [
+        { word: 'all', polish: 'wszystko', exampleEn: 'All people are welcome here.', examplePl: 'Wszyscy ludzie są tutaj mile widziani.' },
+        { word: 'and', polish: 'i', exampleEn: 'I like tea and coffee.', examplePl: 'Lubię herbatę i kawę.' },
+        { word: 'boy', polish: 'chłopiec', exampleEn: 'The boy is smiling.', examplePl: 'Chłopiec się uśmiecha.' },
+        { word: 'car', polish: 'samochód', exampleEn: 'My car is blue.', examplePl: 'Mój samochód jest niebieski.' },
+        { word: 'cat', polish: 'kot', exampleEn: 'The cat is sleeping.', examplePl: 'Kot śpi.' },
+        { word: 'day', polish: 'dzień', exampleEn: 'It is a sunny day.', examplePl: 'To jest słoneczny dzień.' },
+        { word: 'end', polish: 'koniec', exampleEn: 'The lesson is at the end.', examplePl: 'Lekcja jest na końcu.' },
+        { word: 'family', polish: 'rodzina', exampleEn: 'My family is happy.', examplePl: 'Moja rodzina jest szczęśliwa.' },
+        { word: 'home', polish: 'dom', exampleEn: 'I am at home.', examplePl: 'Jestem w domu.' },
+        { word: 'it', polish: 'to', exampleEn: 'It is cold today.', examplePl: 'Dzisiaj jest zimno.' },
+        { word: 'man', polish: 'mężczyzna', exampleEn: 'The man is tall.', examplePl: 'Ten mężczyzna jest wysoki.' },
+        { word: 'name', polish: 'imię', exampleEn: 'What is your name?', examplePl: 'Jak masz na imię?' },
+        { word: 'one', polish: 'jeden', exampleEn: 'I have one book.', examplePl: 'Mam jedną książkę.' },
+        { word: 'people', polish: 'ludzie', exampleEn: 'People like music.', examplePl: 'Ludzie lubią muzykę.' },
+        { word: 'read', polish: 'czytać', exampleEn: 'I read every evening.', examplePl: 'Czytam codziennie wieczorem.' },
+        { word: 'school', polish: 'szkoła', exampleEn: 'I go to school.', examplePl: 'Chodzę do szkoły.' },
+        { word: 'speak', polish: 'mówić', exampleEn: 'Please speak slowly.', examplePl: 'Proszę mówić wolniej.' },
+        { word: 'this', polish: 'to', exampleEn: 'This is my bag.', examplePl: 'To jest moja torba.' },
+        { word: 'you', polish: 'ty', exampleEn: 'You are very kind.', examplePl: 'Jesteś bardzo miły.' },
+        { word: 'work', polish: 'praca', exampleEn: 'I work from home.', examplePl: 'Pracuję z domu.' }
+      ],
+      2: [
+        { word: 'ask', polish: 'zapytać', exampleEn: 'Can I ask a question?', examplePl: 'Czy mogę zadać pytanie?' },
+        { word: 'book', polish: 'książka', exampleEn: 'I read a book.', examplePl: 'Czytam książkę.' },
+        { word: 'can', polish: 'móc', exampleEn: 'I can swim.', examplePl: 'Mogę pływać.' },
+        { word: 'dog', polish: 'pies', exampleEn: 'The dog is happy.', examplePl: 'Pies jest szczęśliwy.' },
+        { word: 'eye', polish: 'oko', exampleEn: 'I have two eyes.', examplePl: 'Mam dwa oczy.' },
+        { word: 'first', polish: 'pierwszy', exampleEn: 'This is my first lesson.', examplePl: 'To jest moja pierwsza lekcja.' },
+        { word: 'go', polish: 'iść', exampleEn: 'Let us go now.', examplePl: 'Chodźmy teraz.' },
+        { word: 'he', polish: 'on', exampleEn: 'He is my friend.', examplePl: 'On jest moim przyjacielem.' },
+        { word: 'child', polish: 'dziecko', exampleEn: 'The child is laughing.', examplePl: 'Dziecko się śmieje.' },
+        { word: 'in', polish: 'w', exampleEn: 'The key is in the box.', examplePl: 'Klucz jest w pudełku.' },
+        { word: 'learn', polish: 'uczyć się', exampleEn: 'I want to learn English.', examplePl: 'Chcę uczyć się angielskiego.' },
+        { word: 'morning', polish: 'ranek', exampleEn: 'Good morning!', examplePl: 'Dzień dobry!' },
+        { word: 'open', polish: 'otwierać', exampleEn: 'Please open the door.', examplePl: 'Proszę otworzyć drzwi.' },
+        { word: 'play', polish: 'grać', exampleEn: 'We play football.', examplePl: 'Gramy w piłkę.' },
+        { word: 'question', polish: 'pytanie', exampleEn: 'I have a question.', examplePl: 'Mam pytanie.' },
+        { word: 'room', polish: 'pokój', exampleEn: 'The room is clean.', examplePl: 'Pokój jest czysty.' },
+        { word: 'say', polish: 'mówić', exampleEn: 'Please say it again.', examplePl: 'Proszę powiedzieć to jeszcze raz.' },
+        { word: 'start', polish: 'zaczynać', exampleEn: 'We start at nine.', examplePl: 'Zaczynamy o dziewiątej.' },
+        { word: 'today', polish: 'dzisiaj', exampleEn: 'Today is Monday.', examplePl: 'Dzisiaj jest poniedziałek.' },
+        { word: 'word', polish: 'słowo', exampleEn: 'This word is difficult.', examplePl: 'To słowo jest trudne.' }
+      ],
+      3: [
+        { word: 'about', polish: 'o', exampleEn: 'Tell me about your day.', examplePl: 'Powiedz mi o swoim dniu.' },
+        { word: 'at', polish: 'w', exampleEn: 'We are at school.', examplePl: 'Jesteśmy w szkole.' },
+        { word: 'brother', polish: 'brat', exampleEn: 'My brother is older.', examplePl: 'Mój brat jest starszy.' },
+        { word: 'drink', polish: 'pić', exampleEn: 'I drink water.', examplePl: 'Piję wodę.' },
+        { word: 'easy', polish: 'łatwy', exampleEn: 'This exercise is easy.', examplePl: 'To ćwiczenie jest łatwe.' },
+        { word: 'father', polish: 'ojciec', exampleEn: 'My father works hard.', examplePl: 'Mój ojciec ciężko pracuje.' },
+        { word: 'girl', polish: 'dziewczyna', exampleEn: 'The girl is reading.', examplePl: 'Dziewczyna czyta.' },
+        { word: 'help', polish: 'pomagać', exampleEn: 'Can you help me?', examplePl: 'Czy możesz mi pomóc?' },
+        { word: 'chair', polish: 'krzesło', exampleEn: 'The chair is comfortable.', examplePl: 'To krzesło jest wygodne.' },
+        { word: 'know', polish: 'wiedzieć', exampleEn: 'I know the answer.', examplePl: 'Wiem odpowiedź.' },
+        { word: 'my', polish: 'mój', exampleEn: 'My phone is new.', examplePl: 'Mój telefon jest nowy.' },
+        { word: 'new', polish: 'nowy', exampleEn: 'I have a new bike.', examplePl: 'Mam nowy rower.' },
+        { word: 'paper', polish: 'papier', exampleEn: 'I need paper.', examplePl: 'Potrzebuję papieru.' },
+        { word: 'please', polish: 'proszę', exampleEn: 'Please sit down.', examplePl: 'Proszę usiąść.' },
+        { word: 'rich', polish: 'bogaty', exampleEn: 'They are rich.', examplePl: 'Oni są bogaci.' },
+        { word: 'she', polish: 'ona', exampleEn: 'She is my sister.', examplePl: 'Ona jest moją siostrą.' },
+        { word: 'show', polish: 'pokazywać', exampleEn: 'Please show me the way.', examplePl: 'Proszę pokazać mi drogę.' },
+        { word: 'son', polish: 'syn', exampleEn: 'Their son is eight.', examplePl: 'Ich syn ma osiem lat.' },
+        { word: 'they', polish: 'oni', exampleEn: 'They are friendly.', examplePl: 'Oni są przyjaźni.' },
+        { word: 'what', polish: 'co', exampleEn: 'What is your favorite color?', examplePl: 'Jakiego koloru jest twoje ulubione?' }
+      ],
+      4: [
+        { word: 'always', polish: 'zawsze', exampleEn: 'I always wake up early.', examplePl: 'Zawsze wstaję wcześnie.' },
+        { word: 'be', polish: 'być', exampleEn: 'Be careful!', examplePl: 'Bądź ostrożny!' },
+        { word: 'body', polish: 'ciało', exampleEn: 'My body hurts.', examplePl: 'Moje ciało boli.' },
+        { word: 'careful', polish: 'ostrożny', exampleEn: 'Be careful on the road.', examplePl: 'Bądź ostrożny na drodze.' },
+        { word: 'cry', polish: 'płakać', exampleEn: 'The baby may cry.', examplePl: 'Dziecko może płakać.' },
+        { word: 'door', polish: 'drzwi', exampleEn: 'Close the door.', examplePl: 'Zamknij drzwi.' },
+        { word: 'everything', polish: 'wszystko', exampleEn: 'Everything is ready.', examplePl: 'Wszystko jest gotowe.' },
+        { word: 'face', polish: 'twarz', exampleEn: 'She has a kind face.', examplePl: 'Ona ma miłą twarz.' },
+        { word: 'her', polish: 'jej', exampleEn: 'This is her book.', examplePl: 'To jest jej książka.' },
+        { word: 'if', polish: 'jeśli', exampleEn: 'If you are ready, start.', examplePl: 'Jeśli jesteś gotowy, zacznij.' },
+        { word: 'many', polish: 'wiele', exampleEn: 'Many people came.', examplePl: 'Wiele osób przyszło.' },
+        { word: 'no', polish: 'nie', exampleEn: 'No, thank you.', examplePl: 'Nie, dziękuję.' },
+        { word: 'pen', polish: 'długopis', exampleEn: 'I need a pen.', examplePl: 'Potrzebuję długopisu.' },
+        { word: 'place', polish: 'miejsce', exampleEn: 'This is a nice place.', examplePl: 'To jest ładne miejsce.' },
+        { word: 'road', polish: 'droga', exampleEn: 'The road is long.', examplePl: 'Droga jest długa.' },
+        { word: 'stop', polish: 'zatrzymać', exampleEn: 'Please stop here.', examplePl: 'Proszę zatrzymać się tutaj.' },
+        { word: 'student', polish: 'uczeń', exampleEn: 'The student is studying.', examplePl: 'Uczeń się uczy.' },
+        { word: 'two', polish: 'dwa', exampleEn: 'I have two cats.', examplePl: 'Mam dwa koty.' },
+        { word: 'want', polish: 'chcieć', exampleEn: 'Do you want tea?', examplePl: 'Czy chcesz herbatę?' },
+        { word: 'where', polish: 'gdzie', exampleEn: 'Where is the station?', examplePl: 'Gdzie jest stacja?' }
+      ]
+    };
+
+    const initialState = {
+      lessons: defaultLessons,
+      mode: 'learn',
+      selectedLessonId: 1,
+      currentCardId: null,
+      currentCardSide: 'front',
+      lastSession: null,
+      streak: 0,
+      lastActiveDate: null
+    };
+
+    function createCard(lessonId, word, polish, exampleEn = null, examplePl = null) {
+      const cleanWord = word.trim();
+      const cleanPolish = polish.trim();
+      const finalExampleEn = exampleEn && exampleEn.trim() ? exampleEn.trim() : `I use the word "${cleanWord}".`;
+      const finalExamplePl = examplePl && examplePl.trim() ? examplePl.trim() : `Używam słowa "${cleanPolish}".`;
+      return {
+        id: `${lessonId}-${cleanWord.toLowerCase()}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        lessonId,
+        word: cleanWord,
+        polish: cleanPolish,
+        exampleEn: finalExampleEn,
+        examplePl: finalExamplePl,
+        interval: 0,
+        ease: 2.5,
+        repetitions: 0,
+        due: null,
+        lastReviewed: null,
+        stage: 0,
+        createdAt: Date.now()
+      };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return initialState;
+        const parsed = JSON.parse(raw);
+        return {
+          ...initialState,
+          ...parsed,
+          lessons: parsed.lessons && parsed.lessons.length ? parsed.lessons : initialState.lessons
+        };
+      } catch (error) {
+        console.warn('Could not load state', error);
+        return initialState;
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function seedLessonData() {
+      state.lessons?.forEach((lesson) => {
+        if (lesson.cards.length) return;
+        const hardcodedCards = HARDCODED_LESSONS[lesson.id];
+        if (!hardcodedCards) return;
+        hardcodedCards.forEach(({ word, polish, exampleEn, examplePl }) => {
+          lesson.cards.push(createCard(lesson.id, word, polish, exampleEn, examplePl));
+        });
+      });
+      saveState();
+    }
+
+    let state = loadState();
+    if (!state.lessons || state.lessons.length === 0) {
+      state.lessons = initialState.lessons;
+    }
+    seedLessonData();
+
+    const lessonSelect = document.getElementById('lessonSelect');
+    const learnBtn = document.getElementById('learnBtn');
+    const reviewBtn = document.getElementById('reviewBtn');
+    const wordText = document.getElementById('wordText');
+    const sentenceText = document.getElementById('sentenceText');
+    const translationText = document.getElementById('translationText');
+    const sentencePlText = document.getElementById('sentencePlText');
+    const cardLabel = document.getElementById('cardLabel');
+    const reviewInfo = document.getElementById('reviewInfo');
+    const cardFront = document.getElementById('cardFront');
+    const cardBack = document.getElementById('cardBack');
+    const ratingRow = document.getElementById('ratingRow');
+    const sessionStatus = document.getElementById('sessionStatus');
+    const lessonStatus = document.getElementById('lessonStatus');
+    const progressFill = document.getElementById('progressFill');
+    const statsContainer = document.getElementById('stats');
+    const cardBox = document.getElementById('cardBox');
+    const cardInner = document.getElementById('cardInner');
+    const debugContent = document.getElementById('debugContent');
+    const speakBtn = document.getElementById('speakBtn');
+    const speakBtnBack = document.getElementById('speakBtnBack');
+    const hardBtn = document.getElementById('hardBtn');
+    const goodBtn = document.getElementById('goodBtn');
+    const easyBtn = document.getElementById('easyBtn');
+
+    function isLessonCompleted(lesson) {
+      const cards = lesson?.cards || [];
+      if (!cards.length) return false;
+      return cards.every((card) => (card.repetitions || 0) >= 1);
+    }
+
+    function populateLessonOptions() {
+      lessonSelect.innerHTML = '';
+      state.lessons.forEach((lesson) => {
+        const option = document.createElement('option');
+        option.value = lesson.id;
+        option.textContent = isLessonCompleted(lesson) ? `✓ Lekcja ${lesson.id}` : `Lekcja ${lesson.id}`;
+        lessonSelect.appendChild(option);
+      });
+      lessonSelect.value = state.selectedLessonId || 1;
+    }
+
+    function getLesson(lessonId) {
+      return state.lessons.find((lesson) => lesson.id === lessonId);
+    }
+
+    function getAllCards() {
+      return state.lessons.flatMap((lesson) => lesson.cards || []);
+    }
+
+    function getCardsForLesson(lessonId) {
+      return (getLesson(lessonId)?.cards || []);
+    }
+
+    function getTodayKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function updateStats() {
+      const allCards = getAllCards();
+      const learned = allCards.filter((card) => card.repetitions >= 1).length;
+      const dueNow = allCards.filter((card) => card.due && card.due <= Date.now()).length;
+      const todayKey = getTodayKey();
+      const streak = state.streak || 0;
+      statsContainer.innerHTML = `
+        <div class="stat"><strong>${learned}</strong><span>nauczone</span></div>
+        <div class="stat"><strong>${dueNow}</strong><span>do dziś</span></div>
+        <div class="stat"><strong>${streak}</strong><span>dni z rzędu</span></div>
+        <div class="stat"><strong>${allCards.length}</strong><span>kart</span></div>
+      `;
+    }
+
+    function computeProgress() {
+      const lesson = getLesson(state.selectedLessonId);
+      const cards = lesson?.cards || [];
+      const learned = cards.filter((card) => card.repetitions >= 1).length;
+      const percent = cards.length ? Math.round((learned / cards.length) * 100) : 0;
+      progressFill.style.width = `${percent}%`;
+      const completed = isLessonCompleted(lesson) ? ' • ukończona' : '';
+      lessonStatus.textContent = `${learned}/${cards.length} kart opanowanych${completed}`;
+    }
+
+    function getReviewText(card) {
+      if (!card) return '';
+      if (!card.repetitions) return 'Nowa karta';
+      const diffMs = card.due - Date.now();
+      const diffMinutes = Math.max(0, Math.ceil(diffMs / (60 * 1000)));
+      if (diffMinutes <= 0) return 'Powtórka teraz';
+      if (diffMinutes < 60) return `Powtórka za ${diffMinutes} min`;
+      const diffHours = Math.round(diffMinutes / 60);
+      if (diffHours < 24) return `Powtórka za ${diffHours} h`;
+      const diffDays = Math.round(diffHours / 24);
+      return `Powtórka za ${diffDays} ${diffDays === 1 ? 'dzień' : 'dni'}`;
+    }
+
+    function updateDebugBox() {
+      const allCards = getAllCards();
+      const buckets = {
+        nowa: 0,
+        '0 dni': 0,
+        '1 dzień': 0,
+        '2-3 dni': 0,
+        '4-7 dni': 0,
+        '8+ dni': 0
+      };
+
+      allCards.forEach((card) => {
+        if (!card.repetitions) {
+          buckets.nowa += 1;
+          return;
+        }
+        const diffMs = card.due - Date.now();
+        const diffDays = Math.max(0, Math.ceil(diffMs / (24 * 60 * 60 * 1000)));
+        if (diffDays <= 0) buckets['0 dni'] += 1;
+        else if (diffDays === 1) buckets['1 dzień'] += 1;
+        else if (diffDays <= 3) buckets['2-3 dni'] += 1;
+        else if (diffDays <= 7) buckets['4-7 dni'] += 1;
+        else buckets['8+ dni'] += 1;
+      });
+
+      const rows = Object.entries(buckets).map(([label, count]) => `${label}: ${count}`);
+      debugContent.innerHTML = rows.join('<br>');
+    }
+
+    function showEmptyCard(message) {
+      wordText.textContent = 'Brak kart';
+      sentenceText.textContent = message;
+      translationText.textContent = '';
+      sentencePlText.textContent = '';
+      cardLabel.textContent = 'Pusty stan';
+      reviewInfo.textContent = '';
+      cardBox.classList.remove('flipped');
+      ratingRow.classList.add('hidden');
+      speakBtn.disabled = true;
+      speakBtnBack.disabled = true;
+      state.currentCardId = null;
+      state.currentCardSide = 'front';
+    }
+
+    function renderCard(card) {
+      if (!card) {
+        showEmptyCard('Wybierz inną lekcję lub dodaj słówka ręcznie.');
+        return;
+      }
+      wordText.textContent = card.word;
+      sentenceText.textContent = card.exampleEn;
+      translationText.textContent = `${card.polish}`;
+      sentencePlText.textContent = card.examplePl;
+      cardLabel.textContent = state.mode === 'learn' ? 'Nowa karta' : 'Do powtórki';
+      reviewInfo.textContent = getReviewText(card);
+      cardBox.classList.remove('flipped');
+      cardInner.style.transform = '';
+      ratingRow.classList.remove('hidden');
+      speakBtn.disabled = false;
+      speakBtnBack.disabled = false;
+      state.currentCardId = card.id;
+      state.currentCardSide = 'front';
+      sessionStatus.textContent = `Karta ${card.word} • ${getLesson(card.lessonId)?.title || 'Lekcja'}`;
+      cardBox.classList.remove('fade-in');
+      void cardBox.offsetWidth;
+      cardBox.classList.add('fade-in');
+    }
+
+    function getNextCardForLearning(lessonId) {
+      const cards = getCardsForLesson(lessonId);
+      return cards.find((card) => (card.repetitions || 0) < 1) || null;
+    }
+
+    function getNextCardForReview() {
+      const now = Date.now();
+      const allCards = getAllCards();
+      return allCards.filter((card) => card.due && card.due <= now).sort((a, b) => a.due - b.due)[0] || null;
+    }
+
+    function startLearning() {
+      state.mode = 'learn';
+      state.selectedLessonId = Number(lessonSelect.value);
+      const lesson = getLesson(state.selectedLessonId);
+      const card = getNextCardForLearning(state.selectedLessonId);
+      if (!lesson || lesson.cards.length === 0) {
+        showEmptyCard('Ta lekcja jest pusta. Dodaj słówka ręcznie.');
+        return;
+      }
+      if (!card) {
+        sessionStatus.textContent = 'Wszystkie karty z tej lekcji są już opanowane. Spróbuj przejść do powtórek.';
+        showEmptyCard('Wszystkie karty z tej lekcji są już opanowane.');
+        return;
+      }
+      renderCard(card);
+      saveState();
+    }
+
+    function startReview() {
+      state.mode = 'review';
+      const card = getNextCardForReview();
+      if (!card) {
+        sessionStatus.textContent = 'Brak zaległych kart. Świetnie!';
+        showEmptyCard('Brak zaległych kart. Świetnie!');
+        return;
+      }
+      state.selectedLessonId = card.lessonId;
+      lessonSelect.value = card.lessonId;
+      renderCard(card);
+      saveState();
+    }
+
+    function flipCard() {
+      if (!state.currentCardId) return;
+      cardBox.classList.toggle('flipped');
+      if (state.currentCardSide === 'front') {
+        state.currentCardSide = 'back';
+      } else {
+        state.currentCardSide = 'front';
+      }
+    }
+
+    function speakWord() {
+      const card = getCardById(state.currentCardId);
+      if (!card) return;
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(card.word);
+        utterance.lang = 'en-US';
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function getCardById(cardId) {
+      return getAllCards().find((card) => card.id === cardId) || null;
+    }
+
+    function updateCardScheduling(card, grade) {
+      const now = Date.now();
+      const newRepetitions = card.repetitions + 1;
+      let nextInterval = 0;
+      let newEase = card.ease;
+      let intervalDays = 1;
+
+      if (grade === 'hard') {
+        intervalDays = 1;
+        nextInterval = 1;
+        newEase = Math.max(1.3, card.ease - 0.2);
+      } else if (grade === 'good') {
+        if (card.repetitions === 0) {
+          intervalDays = 2;
+          nextInterval = 2;
+        } else if (card.repetitions === 1) {
+          intervalDays = 4;
+          nextInterval = 4;
+        } else {
+          intervalDays = Math.max(4, Math.round((card.interval || 1) * Math.max(1.2, card.ease)));
+          nextInterval = intervalDays;
+        }
+        newEase = Math.max(1.3, card.ease + 0.05);
+      } else if (grade === 'easy') {
+        if (card.repetitions === 0) {
+          intervalDays = 3;
+          nextInterval = 3;
+        } else if (card.repetitions === 1) {
+          intervalDays = 7;
+          nextInterval = 7;
+        } else {
+          const previousInterval = Math.max(1, card.interval || 1);
+          intervalDays = Math.max(7, Math.round(previousInterval * Math.max(1.4, card.ease * 0.8)));
+          nextInterval = intervalDays;
+        }
+        newEase = Math.max(1.3, card.ease + 0.1);
+      }
+
+      card.interval = nextInterval;
+      card.ease = newEase;
+      card.repetitions = newRepetitions;
+      card.lastReviewed = now;
+      card.due = now + intervalDays * 24 * 60 * 60 * 1000;
+      card.stage = Math.max(card.stage, newRepetitions);
+
+      if (newRepetitions >= 1) {
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        if (state.lastActiveDate && yesterday.toDateString() === new Date(state.lastActiveDate).toDateString()) {
+          state.streak = Math.max(state.streak, (state.streak || 0) + 1);
+        } else if (!state.lastActiveDate || today.toDateString() !== new Date(state.lastActiveDate).toDateString()) {
+          state.streak = 1;
+        }
+        state.lastActiveDate = now;
+      }
+
+      saveState();
+      updateStats();
+      computeProgress();
+      updateDebugBox();
+      if (state.mode === 'learn') {
+        const nextCard = getNextCardForLearning(state.selectedLessonId);
+        if (nextCard) {
+          renderCard(nextCard);
+        } else {
+          sessionStatus.textContent = 'Lekcja ukończona. Możesz przejść do powtórek.';
+          showEmptyCard('Lekcja ukończona. Możesz przejść do powtórek.');
+        }
+      } else {
+        const nextCard = getNextCardForReview();
+        if (nextCard) {
+          renderCard(nextCard);
+        } else {
+          sessionStatus.textContent = 'Brak zaległych kart. Świetnie!';
+          showEmptyCard('Brak zaległych kart. Świetnie!');
+        }
+      }
+    }
+
+    function rateCard(grade) {
+      const card = getCardById(state.currentCardId);
+      if (!card) return;
+      updateCardScheduling(card, grade);
+    }
+
+    lessonSelect.addEventListener('change', () => {
+      state.selectedLessonId = Number(lessonSelect.value);
+      computeProgress();
+      startLearning();
+    });
+
+    learnBtn.addEventListener('click', startLearning);
+    reviewBtn.addEventListener('click', startReview);
+    cardBox.addEventListener('click', flipCard);
+    speakBtn.addEventListener('click', (event) => { event.stopPropagation(); speakWord(); });
+    speakBtnBack.addEventListener('click', (event) => { event.stopPropagation(); speakWord(); });
+    hardBtn.addEventListener('click', (event) => { event.stopPropagation(); rateCard('hard'); });
+    goodBtn.addEventListener('click', (event) => { event.stopPropagation(); rateCard('good'); });
+    easyBtn.addEventListener('click', (event) => { event.stopPropagation(); rateCard('easy'); });
+
+    function init() {
+      seedLessonData();
+      populateLessonOptions();
+      state.selectedLessonId = 1;
+      lessonSelect.value = 1;
+      computeProgress();
+      updateStats();
+      updateDebugBox();
+      showEmptyCard('Wybierz lekcję i zacznij.');
+      sessionStatus.textContent = 'Wybierz lekcję i zacznij.';
+    }
+
+    init();
+  </script>
+</body>
+</html>
