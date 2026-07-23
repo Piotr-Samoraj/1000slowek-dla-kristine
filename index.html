@@ -225,7 +225,6 @@
       </div>
       <div class="row">
         <select id="lessonSelect"></select>
-        <button class="btn-primary" id="learnBtn">Ucz się nowej lekcji</button>
         <button class="btn-secondary" id="reviewBtn">Przeglądaj zaległe</button>
       </div>
       <div class="progress-bar"><div id="progressFill" style="width: 0%"></div></div>
@@ -237,7 +236,6 @@
         <div class="card-inner" id="cardInner">
           <div class="card-face front" id="cardFront">
             <div class="label" id="cardLabel">Gotowy</div>
-            <div class="small muted" id="reviewInfo">Nowa karta</div>
             <div>
               <div class="word" id="wordText">Witaj!</div>
               <div class="sentence" id="sentenceText">Tutaj zobaczysz angielskie słówko i przykładowe zdanie.</div>
@@ -281,93 +279,1136 @@
     }));
 
     const HARDCODED_LESSONS = {
-      1: [
-        { word: 'all', polish: 'wszystko', exampleEn: 'All people are welcome here.', examplePl: 'Wszyscy ludzie są tutaj mile widziani.' },
-        { word: 'and', polish: 'i', exampleEn: 'I like tea and coffee.', examplePl: 'Lubię herbatę i kawę.' },
-        { word: 'boy', polish: 'chłopiec', exampleEn: 'The boy is smiling.', examplePl: 'Chłopiec się uśmiecha.' },
-        { word: 'car', polish: 'samochód', exampleEn: 'My car is blue.', examplePl: 'Mój samochód jest niebieski.' },
-        { word: 'cat', polish: 'kot', exampleEn: 'The cat is sleeping.', examplePl: 'Kot śpi.' },
-        { word: 'day', polish: 'dzień', exampleEn: 'It is a sunny day.', examplePl: 'To jest słoneczny dzień.' },
-        { word: 'end', polish: 'koniec', exampleEn: 'The lesson is at the end.', examplePl: 'Lekcja jest na końcu.' },
-        { word: 'family', polish: 'rodzina', exampleEn: 'My family is happy.', examplePl: 'Moja rodzina jest szczęśliwa.' },
-        { word: 'home', polish: 'dom', exampleEn: 'I am at home.', examplePl: 'Jestem w domu.' },
-        { word: 'it', polish: 'to', exampleEn: 'It is cold today.', examplePl: 'Dzisiaj jest zimno.' },
-        { word: 'man', polish: 'mężczyzna', exampleEn: 'The man is tall.', examplePl: 'Ten mężczyzna jest wysoki.' },
-        { word: 'name', polish: 'imię', exampleEn: 'What is your name?', examplePl: 'Jak masz na imię?' },
-        { word: 'one', polish: 'jeden', exampleEn: 'I have one book.', examplePl: 'Mam jedną książkę.' },
-        { word: 'people', polish: 'ludzie', exampleEn: 'People like music.', examplePl: 'Ludzie lubią muzykę.' },
-        { word: 'read', polish: 'czytać', exampleEn: 'I read every evening.', examplePl: 'Czytam codziennie wieczorem.' },
-        { word: 'school', polish: 'szkoła', exampleEn: 'I go to school.', examplePl: 'Chodzę do szkoły.' },
-        { word: 'speak', polish: 'mówić', exampleEn: 'Please speak slowly.', examplePl: 'Proszę mówić wolniej.' },
-        { word: 'this', polish: 'to', exampleEn: 'This is my bag.', examplePl: 'To jest moja torba.' },
-        { word: 'you', polish: 'ty', exampleEn: 'You are very kind.', examplePl: 'Jesteś bardzo miły.' },
-        { word: 'work', polish: 'praca', exampleEn: 'I work from home.', examplePl: 'Pracuję z domu.' }
+       1: [
+        { word: 'all', polish: 'wszystko, wszyscy', exampleEn: 'All people are welcome here.', examplePl: 'Wszyscy ludzie są tutaj mile widziani.' },
+        { word: 'and', polish: 'i, oraz', exampleEn: 'I like tea and coffee.', examplePl: 'Lubię herbatę i kawę.' },
+        { word: 'boy', polish: 'chłopiec', exampleEn: 'The boy is playing football.', examplePl: 'Chłopiec gra w piłkę nożną.' },
+        { word: 'car', polish: 'samochód, auto', exampleEn: 'My car is blue.', examplePl: 'Mój samochód jest niebieski.' },
+        { word: 'cat', polish: 'kot', exampleEn: 'The cat is sleeping on the sofa.', examplePl: 'Kot śpi na kanapie.' },
+        { word: 'day', polish: 'dzień', exampleEn: 'It is a beautiful sunny day.', examplePl: 'To jest piękny słoneczny dzień.' },
+        { word: 'end', polish: 'koniec', exampleEn: 'This is the end of the movie.', examplePl: 'To jest koniec filmu.' },
+        { word: 'family', polish: 'rodzina', exampleEn: 'My family is very important to me.', examplePl: 'Moja rodzina jest dla mnie bardzo ważna.' },
+        { word: 'home', polish: 'dom', exampleEn: 'I am going home now.', examplePl: 'Idę teraz do domu.' },
+        { word: 'it', polish: 'to', exampleEn: 'It is raining outside.', examplePl: 'Na zewnątrz pada deszcz.' },
+        { word: 'man', polish: 'mężczyzna, facet', exampleEn: 'The man is tall and friendly.', examplePl: 'Ten mężczyzna jest wysoki i miły.' },
+        { word: 'name', polish: 'imię, nazwa', exampleEn: 'What is your name?', examplePl: 'Jak masz na imię?' },
+        { word: 'one', polish: 'jeden, jedna, jedno', exampleEn: 'I have only one question.', examplePl: 'Mam tylko jedno pytanie.' },
+        { word: 'people', polish: 'ludzie', exampleEn: 'Many people like music.', examplePl: 'Wiele osób lubi muzykę.' },
+        { word: 'read', polish: 'czytać', exampleEn: 'I read books every evening.', examplePl: 'Czytam książki codziennie wieczorem.' },
+        { word: 'school', polish: 'szkoła', exampleEn: 'She goes to school by bus.', examplePl: 'Ona jeździ do szkoły autobusem.' },
+        { word: 'speak', polish: 'mówić, rozmawiać', exampleEn: 'Please speak more slowly.', examplePl: 'Proszę mówić wolniej.' },
+        { word: 'this', polish: 'to, ten, ta', exampleEn: 'This is my favorite book.', examplePl: 'To jest moja ulubiona książka.' },
+        { word: 'you', polish: 'ty, wy', exampleEn: 'You are a great friend.', examplePl: 'Jesteś wspaniałym przyjacielem.' },
+        { word: 'work', polish: 'praca, pracować', exampleEn: 'I work from home three days a week.', examplePl: 'Pracuję z domu trzy dni w tygodniu.' }
       ],
-      2: [
-        { word: 'ask', polish: 'zapytać', exampleEn: 'Can I ask a question?', examplePl: 'Czy mogę zadać pytanie?' },
-        { word: 'book', polish: 'książka', exampleEn: 'I read a book.', examplePl: 'Czytam książkę.' },
-        { word: 'can', polish: 'móc', exampleEn: 'I can swim.', examplePl: 'Mogę pływać.' },
-        { word: 'dog', polish: 'pies', exampleEn: 'The dog is happy.', examplePl: 'Pies jest szczęśliwy.' },
-        { word: 'eye', polish: 'oko', exampleEn: 'I have two eyes.', examplePl: 'Mam dwa oczy.' },
-        { word: 'first', polish: 'pierwszy', exampleEn: 'This is my first lesson.', examplePl: 'To jest moja pierwsza lekcja.' },
-        { word: 'go', polish: 'iść', exampleEn: 'Let us go now.', examplePl: 'Chodźmy teraz.' },
-        { word: 'he', polish: 'on', exampleEn: 'He is my friend.', examplePl: 'On jest moim przyjacielem.' },
-        { word: 'child', polish: 'dziecko', exampleEn: 'The child is laughing.', examplePl: 'Dziecko się śmieje.' },
-        { word: 'in', polish: 'w', exampleEn: 'The key is in the box.', examplePl: 'Klucz jest w pudełku.' },
-        { word: 'learn', polish: 'uczyć się', exampleEn: 'I want to learn English.', examplePl: 'Chcę uczyć się angielskiego.' },
-        { word: 'morning', polish: 'ranek', exampleEn: 'Good morning!', examplePl: 'Dzień dobry!' },
-        { word: 'open', polish: 'otwierać', exampleEn: 'Please open the door.', examplePl: 'Proszę otworzyć drzwi.' },
-        { word: 'play', polish: 'grać', exampleEn: 'We play football.', examplePl: 'Gramy w piłkę.' },
-        { word: 'question', polish: 'pytanie', exampleEn: 'I have a question.', examplePl: 'Mam pytanie.' },
-        { word: 'room', polish: 'pokój', exampleEn: 'The room is clean.', examplePl: 'Pokój jest czysty.' },
-        { word: 'say', polish: 'mówić', exampleEn: 'Please say it again.', examplePl: 'Proszę powiedzieć to jeszcze raz.' },
-        { word: 'start', polish: 'zaczynać', exampleEn: 'We start at nine.', examplePl: 'Zaczynamy o dziewiątej.' },
-        { word: 'today', polish: 'dzisiaj', exampleEn: 'Today is Monday.', examplePl: 'Dzisiaj jest poniedziałek.' },
-        { word: 'word', polish: 'słowo', exampleEn: 'This word is difficult.', examplePl: 'To słowo jest trudne.' }
+       2: [
+        { word: 'ask', polish: 'zapytać, pytać', exampleEn: 'Can I ask a question?', examplePl: 'Czy mogę zadać pytanie?' },
+        { word: 'book', polish: 'książka', exampleEn: 'I am reading an interesting book.', examplePl: 'Czytam interesującą książkę.' },
+        { word: 'can', polish: 'móc, umieć, puszka', exampleEn: 'I can swim very well.', examplePl: 'Umiem dobrze pływać.' },
+        { word: 'dog', polish: 'pies', exampleEn: 'The dog is running in the park.', examplePl: 'Pies biega po parku.' },
+        { word: 'eye', polish: 'oko', exampleEn: 'She has beautiful blue eyes.', examplePl: 'Ona ma piękne niebieskie oczy.' },
+        { word: 'first', polish: 'pierwszy', exampleEn: 'This is my first time here.', examplePl: 'To jest mój pierwszy raz tutaj.' },
+        { word: 'go', polish: 'iść, jechać, chodzić', exampleEn: 'Let\'s go to the cinema.', examplePl: 'Chodźmy do kina.' },
+        { word: 'he', polish: 'on', exampleEn: 'He is my best friend.', examplePl: 'On jest moim najlepszym przyjacielem.' },
+        { word: 'child', polish: 'dziecko', exampleEn: 'The child is laughing happily.', examplePl: 'Dziecko radośnie się śmieje.' },
+        { word: 'in', polish: 'w, wewnątrz', exampleEn: 'The key is in the box.', examplePl: 'Klucz jest w pudełku.' },
+        { word: 'learn', polish: 'uczyć się', exampleEn: 'I want to learn English well.', examplePl: 'Chcę dobrze nauczyć się angielskiego.' },
+        { word: 'morning', polish: 'ranek, rano', exampleEn: 'Good morning! How are you?', examplePl: 'Dzień dobry! Jak się masz?' },
+        { word: 'open', polish: 'otwierać, otwarty', exampleEn: 'Please open the window.', examplePl: 'Proszę otworzyć okno.' },
+        { word: 'play', polish: 'grać, bawić się', exampleEn: 'We play football every weekend.', examplePl: 'Gramy w piłkę nożną w każdy weekend.' },
+        { word: 'question', polish: 'pytanie', exampleEn: 'I have an important question.', examplePl: 'Mam ważne pytanie.' },
+        { word: 'room', polish: 'pokój', exampleEn: 'The room is clean and bright.', examplePl: 'Pokój jest czysty i jasny.' },
+        { word: 'say', polish: 'mówić, powiedzieć', exampleEn: 'Please say it again slowly.', examplePl: 'Proszę powiedzieć to jeszcze raz wolno.' },
+        { word: 'start', polish: 'zaczynać, początek', exampleEn: 'We start the lesson at nine.', examplePl: 'Zaczynamy lekcję o dziewiątej.' },
+        { word: 'today', polish: 'dzisiaj', exampleEn: 'Today is a beautiful day.', examplePl: 'Dzisiaj jest piękny dzień.' },
+        { word: 'word', polish: 'słowo', exampleEn: 'This word is very useful.', examplePl: 'To słowo jest bardzo przydatne.' }
       ],
-      3: [
-        { word: 'about', polish: 'o', exampleEn: 'Tell me about your day.', examplePl: 'Powiedz mi o swoim dniu.' },
-        { word: 'at', polish: 'w', exampleEn: 'We are at school.', examplePl: 'Jesteśmy w szkole.' },
-        { word: 'brother', polish: 'brat', exampleEn: 'My brother is older.', examplePl: 'Mój brat jest starszy.' },
-        { word: 'drink', polish: 'pić', exampleEn: 'I drink water.', examplePl: 'Piję wodę.' },
-        { word: 'easy', polish: 'łatwy', exampleEn: 'This exercise is easy.', examplePl: 'To ćwiczenie jest łatwe.' },
-        { word: 'father', polish: 'ojciec', exampleEn: 'My father works hard.', examplePl: 'Mój ojciec ciężko pracuje.' },
-        { word: 'girl', polish: 'dziewczyna', exampleEn: 'The girl is reading.', examplePl: 'Dziewczyna czyta.' },
-        { word: 'help', polish: 'pomagać', exampleEn: 'Can you help me?', examplePl: 'Czy możesz mi pomóc?' },
-        { word: 'chair', polish: 'krzesło', exampleEn: 'The chair is comfortable.', examplePl: 'To krzesło jest wygodne.' },
-        { word: 'know', polish: 'wiedzieć', exampleEn: 'I know the answer.', examplePl: 'Wiem odpowiedź.' },
-        { word: 'my', polish: 'mój', exampleEn: 'My phone is new.', examplePl: 'Mój telefon jest nowy.' },
-        { word: 'new', polish: 'nowy', exampleEn: 'I have a new bike.', examplePl: 'Mam nowy rower.' },
-        { word: 'paper', polish: 'papier', exampleEn: 'I need paper.', examplePl: 'Potrzebuję papieru.' },
+        3: [
+        { word: 'about', polish: 'o, około', exampleEn: 'Tell me about your day. / The meeting is about two hours long.', examplePl: 'Powiedz mi o swoim dniu. / Spotkanie trwa około dwóch godzin.' },
+        { word: 'at', polish: 'w, na, o', exampleEn: 'We are at school. / The party starts at 8 o\'clock.', examplePl: 'Jesteśmy w szkole. / Impreza zaczyna się o ósmej.' },
+        { word: 'brother', polish: 'brat', exampleEn: 'My brother is older than me.', examplePl: 'Mój brat jest starszy ode mnie.' },
+        { word: 'drink', polish: 'pić', exampleEn: 'I drink water every day.', examplePl: 'Piję wodę codziennie.' },
+        { word: 'easy', polish: 'łatwy', exampleEn: 'This exercise is very easy.', examplePl: 'To ćwiczenie jest bardzo łatwe.' },
+        { word: 'father', polish: 'ojciec, tata', exampleEn: 'My father works very hard.', examplePl: 'Mój ojciec bardzo ciężko pracuje.' },
+        { word: 'girl', polish: 'dziewczyna', exampleEn: 'The girl is reading a book.', examplePl: 'Dziewczyna czyta książkę.' },
+        { word: 'help', polish: 'pomagać, pomoc', exampleEn: 'Can you help me please? / I need your help.', examplePl: 'Czy możesz mi pomóc? / Potrzebuję twojej pomocy.' },
+        { word: 'chair', polish: 'krzesło', exampleEn: 'The chair is very comfortable.', examplePl: 'To krzesło jest bardzo wygodne.' },
+        { word: 'know', polish: 'wiedzieć, znać', exampleEn: 'I know the answer. / I know him well.', examplePl: 'Wiem odpowiedź. / Znam go dobrze.' },
+        { word: 'my', polish: 'mój, moja, moje', exampleEn: 'My phone is brand new.', examplePl: 'Mój telefon jest zupełnie nowy.' },
+        { word: 'new', polish: 'nowy', exampleEn: 'I bought a new bike yesterday.', examplePl: 'Kupiłem wczoraj nowy rower.' },
+        { word: 'paper', polish: 'papier', exampleEn: 'I need a piece of paper. / I read the paper every morning.', examplePl: 'Potrzebuję kartki papieru. / Czytam gazetę co rano.' },
         { word: 'please', polish: 'proszę', exampleEn: 'Please sit down.', examplePl: 'Proszę usiąść.' },
-        { word: 'rich', polish: 'bogaty', exampleEn: 'They are rich.', examplePl: 'Oni są bogaci.' },
-        { word: 'she', polish: 'ona', exampleEn: 'She is my sister.', examplePl: 'Ona jest moją siostrą.' },
+        { word: 'rich', polish: 'bogaty', exampleEn: 'They are very rich.', examplePl: 'Oni są bardzo bogaci.' },
+        { word: 'she', polish: 'ona', exampleEn: 'She is my older sister.', examplePl: 'Ona jest moją starszą siostrą.' },
         { word: 'show', polish: 'pokazywać', exampleEn: 'Please show me the way.', examplePl: 'Proszę pokazać mi drogę.' },
-        { word: 'son', polish: 'syn', exampleEn: 'Their son is eight.', examplePl: 'Ich syn ma osiem lat.' },
-        { word: 'they', polish: 'oni', exampleEn: 'They are friendly.', examplePl: 'Oni są przyjaźni.' },
-        { word: 'what', polish: 'co', exampleEn: 'What is your favorite color?', examplePl: 'Jakiego koloru jest twoje ulubione?' }
+        { word: 'son', polish: 'syn', exampleEn: 'Their son is eight years old.', examplePl: 'Ich syn ma osiem lat.' },
+        { word: 'they', polish: 'oni, one', exampleEn: 'They are very friendly.', examplePl: 'Oni są bardzo przyjaźni.' },
+        { word: 'what', polish: 'co, jaki', exampleEn: 'What is your favorite color? / What time is it?', examplePl: 'Jaki jest twój ulubiony kolor? / Która jest godzina?' }
       ],
-      4: [
+       4: [
         { word: 'always', polish: 'zawsze', exampleEn: 'I always wake up early.', examplePl: 'Zawsze wstaję wcześnie.' },
-        { word: 'be', polish: 'być', exampleEn: 'Be careful!', examplePl: 'Bądź ostrożny!' },
-        { word: 'body', polish: 'ciało', exampleEn: 'My body hurts.', examplePl: 'Moje ciało boli.' },
+        { word: 'be', polish: 'być', exampleEn: 'Be careful! / I want to be a doctor.', examplePl: 'Bądź ostrożny! / Chcę być lekarzem.' },
+        { word: 'body', polish: 'ciało', exampleEn: 'My body hurts after exercise.', examplePl: 'Moje ciało boli po ćwiczeniach.' },
         { word: 'careful', polish: 'ostrożny', exampleEn: 'Be careful on the road.', examplePl: 'Bądź ostrożny na drodze.' },
         { word: 'cry', polish: 'płakać', exampleEn: 'The baby may cry.', examplePl: 'Dziecko może płakać.' },
-        { word: 'door', polish: 'drzwi', exampleEn: 'Close the door.', examplePl: 'Zamknij drzwi.' },
+        { word: 'door', polish: 'drzwi', exampleEn: 'Close the door please.', examplePl: 'Zamknij drzwi proszę.' },
         { word: 'everything', polish: 'wszystko', exampleEn: 'Everything is ready.', examplePl: 'Wszystko jest gotowe.' },
         { word: 'face', polish: 'twarz', exampleEn: 'She has a kind face.', examplePl: 'Ona ma miłą twarz.' },
-        { word: 'her', polish: 'jej', exampleEn: 'This is her book.', examplePl: 'To jest jej książka.' },
-        { word: 'if', polish: 'jeśli', exampleEn: 'If you are ready, start.', examplePl: 'Jeśli jesteś gotowy, zacznij.' },
-        { word: 'many', polish: 'wiele', exampleEn: 'Many people came.', examplePl: 'Wiele osób przyszło.' },
+        { word: 'her', polish: 'jej, ją', exampleEn: 'This is her book.', examplePl: 'To jest jej książka.' },
+        { word: 'if', polish: 'jeśli, jeżeli', exampleEn: 'If you are ready, start.', examplePl: 'Jeśli jesteś gotowy, zacznij.' },
+        { word: 'many', polish: 'wiele, wielu', exampleEn: 'Many people came to the party.', examplePl: 'Wiele osób przyszło na imprezę.' },
         { word: 'no', polish: 'nie', exampleEn: 'No, thank you.', examplePl: 'Nie, dziękuję.' },
-        { word: 'pen', polish: 'długopis', exampleEn: 'I need a pen.', examplePl: 'Potrzebuję długopisu.' },
-        { word: 'place', polish: 'miejsce', exampleEn: 'This is a nice place.', examplePl: 'To jest ładne miejsce.' },
-        { word: 'road', polish: 'droga', exampleEn: 'The road is long.', examplePl: 'Droga jest długa.' },
-        { word: 'stop', polish: 'zatrzymać', exampleEn: 'Please stop here.', examplePl: 'Proszę zatrzymać się tutaj.' },
-        { word: 'student', polish: 'uczeń', exampleEn: 'The student is studying.', examplePl: 'Uczeń się uczy.' },
-        { word: 'two', polish: 'dwa', exampleEn: 'I have two cats.', examplePl: 'Mam dwa koty.' },
-        { word: 'want', polish: 'chcieć', exampleEn: 'Do you want tea?', examplePl: 'Czy chcesz herbatę?' },
+        { word: 'pen', polish: 'długopis, pióro', exampleEn: 'I need a pen to write.', examplePl: 'Potrzebuję długopisu do pisania.' },
+        { word: 'place', polish: 'miejsce', exampleEn: 'This is a nice place. / Place the book on the table.', examplePl: 'To jest ładne miejsce. / Połóż książkę na stole.' },
+        { word: 'road', polish: 'droga', exampleEn: 'The road is long and straight.', examplePl: 'Droga jest długa i prosta.' },
+        { word: 'stop', polish: 'zatrzymać, przestać', exampleEn: 'Please stop here. / Stop talking!', examplePl: 'Proszę zatrzymać się tutaj. / Przestań mówić!' },
+        { word: 'student', polish: 'uczeń, student', exampleEn: 'The student is studying hard.', examplePl: 'Uczeń bardzo się uczy.' },
+        { word: 'two', polish: 'dwa, dwie, dwoje', exampleEn: 'I have two cats.', examplePl: 'Mam dwa koty.' },
+        { word: 'want', polish: 'chcieć', exampleEn: 'Do you want some tea?', examplePl: 'Czy chcesz herbatę?' },
         { word: 'where', polish: 'gdzie', exampleEn: 'Where is the station?', examplePl: 'Gdzie jest stacja?' }
+      ],
+ 5: [
+        { word: 'answer', polish: 'odpowiedź, odpowiadać', exampleEn: 'What is the correct answer? / Can you answer the phone?', examplePl: 'Jaka jest poprawna odpowiedź? / Możesz odebrać telefon?' },
+        { word: 'between', polish: 'pomiędzy, między', exampleEn: 'The shop is between the bank and the post office.', examplePl: 'Sklep jest pomiędzy bankiem a pocztą.' },
+        { word: 'clear', polish: 'jasny, klarowny', exampleEn: 'The sky is clear today. / The instructions are very clear.', examplePl: 'Niebo jest dzisiaj jasne. / Instrukcje są bardzo klarowne.' },
+        { word: 'country', polish: 'kraj', exampleEn: 'Which country are you from?', examplePl: 'Z jakiego kraju pochodzisz?' },
+        { word: 'dance', polish: 'taniec, tańczyć', exampleEn: 'I like to dance at parties.', examplePl: 'Lubię tańczyć na imprezach.' },
+        { word: 'do', polish: 'zrobić, robić', exampleEn: 'What do you want to do today?', examplePl: 'Co chcesz dzisiaj robić?' },
+        { word: 'each', polish: 'każdy', exampleEn: 'Each student has a book.', examplePl: 'Każdy uczeń ma książkę.' },
+        { word: 'friend', polish: 'przyjaciel, kolega', exampleEn: 'He is my best friend.', examplePl: 'On jest moim najlepszym przyjacielem.' },
+        { word: 'his', polish: 'jego', exampleEn: 'This is his new car.', examplePl: 'To jest jego nowy samochód.' },
+        { word: 'job', polish: 'praca, stanowisko', exampleEn: 'I like my new job very much.', examplePl: 'Bardzo lubię swoją nową pracę.' },
+        { word: 'life', polish: 'życie', exampleEn: 'Life is beautiful.', examplePl: 'Życie jest piękne.' },
+        { word: 'more', polish: 'więcej', exampleEn: 'I want more coffee please.', examplePl: 'Chcę więcej kawy proszę.' },
+        { word: 'park', polish: 'park', exampleEn: 'We play in the park every weekend.', examplePl: 'Gramy w parku w każdy weekend.' },
+        { word: 'person', polish: 'osoba', exampleEn: 'She is a very nice person.', examplePl: 'Ona jest bardzo miłą osobą.' },
+        { word: 'ready', polish: 'gotowy', exampleEn: 'Are you ready to go?', examplePl: 'Jesteś gotowy, żeby iść?' },
+        { word: 'second', polish: 'drugi, sekunda', exampleEn: 'This is my second English lesson. / Wait a second!', examplePl: 'To jest moja druga lekcja angielskiego. / Poczekaj sekundę!' },
+        { word: 'soon', polish: 'wkrótce', exampleEn: 'I will call you soon.', examplePl: 'Zadzwonię do ciebie wkrótce.' },
+        { word: 'that', polish: 'że, to', exampleEn: 'I think that you are right.', examplePl: 'Myślę, że masz rację.' },
+        { word: 'we', polish: 'my', exampleEn: 'We are going to the cinema tonight.', examplePl: 'Idziemy dzisiaj do kina.' },
+        { word: 'why', polish: 'dlaczego, czemu', exampleEn: 'Why are you late?', examplePl: 'Dlaczego się spóźniasz?' }
+      ],
+
+ 6: [
+        { word: 'able', polish: 'zdolny, móc', exampleEn: 'She is able to speak three languages.', examplePl: 'Ona potrafi mówić trzema językami.' },
+        { word: 'before', polish: 'przed', exampleEn: 'I saw him before the lesson.', examplePl: 'Widziałem go przed lekcją.' },
+        { word: 'but', polish: 'ale', exampleEn: 'I like it but it\'s expensive.', examplePl: 'Lubię to, ale jest drogie.' },
+        { word: 'clean', polish: 'czysty, czyścić', exampleEn: 'The room is clean. / I need to clean my room.', examplePl: 'Pokój jest czysty. / Muszę posprzątać swój pokój.' },
+        { word: 'close', polish: 'blisko, zamykać', exampleEn: 'The school is close to my house. / Please close the window.', examplePl: 'Szkoła jest blisko mojego domu. / Proszę zamknąć okno.' },
+        { word: 'dream', polish: 'marzenie, śnić', exampleEn: 'I have a big dream. / I dream about traveling.', examplePl: 'Mam wielkie marzenie. / Śnię o podróżowaniu.' },
+        { word: 'eight', polish: 'osiem', exampleEn: 'I have eight friends in this class.', examplePl: 'Mam ośmiu przyjaciół w tej klasie.' },
+        { word: 'for', polish: 'dla, na, za', exampleEn: 'This gift is for you. / I stayed for two hours.', examplePl: 'Ten prezent jest dla ciebie. / Zostałem na dwie godziny.' },
+        { word: 'hand', polish: 'dłoń, ręka', exampleEn: 'Give me your hand.', examplePl: 'Daj mi rękę.' },
+        { word: 'inside', polish: 'wewnątrz, wewnątrz', exampleEn: 'The cat is inside the box.', examplePl: 'Kot jest wewnątrz pudełka.' },
+        { word: 'now', polish: 'teraz', exampleEn: 'I am busy now.', examplePl: 'Jestem teraz zajęty.' },
+        { word: 'or', polish: 'lub, albo', exampleEn: 'Tea or coffee?', examplePl: 'Herbata czy kawa?' },
+        { word: 'picture', polish: 'obrazek, zdjęcie', exampleEn: 'She drew a beautiful picture.', examplePl: 'Narysowała piękny obrazek.' },
+        { word: 'river', polish: 'rzeka', exampleEn: 'The river is very long.', examplePl: 'Rzeka jest bardzo długa.' },
+        { word: 'ship', polish: 'statek', exampleEn: 'The ship is sailing to America.', examplePl: 'Statek płynie do Ameryki.' },
+        { word: 'shop', polish: 'sklep', exampleEn: 'I go to the shop every day.', examplePl: 'Codziennie chodzę do sklepu.' },
+        { word: 'sit', polish: 'siedzieć', exampleEn: 'Please sit down.', examplePl: 'Proszę usiąść.' },
+        { word: 'table', polish: 'stół', exampleEn: 'The book is on the table.', examplePl: 'Książka leży na stole.' },
+        { word: 'very', polish: 'bardzo', exampleEn: 'She is very happy.', examplePl: 'Ona jest bardzo szczęśliwa.' },
+        { word: 'write', polish: 'pisać', exampleEn: 'I write emails every morning.', examplePl: 'Piszę maile co rano.' }
+      ],
+
+ 7: [
+        { word: 'air', polish: 'powietrze', exampleEn: 'The air is fresh here.', examplePl: 'Powietrze jest tutaj świeże.' },
+        { word: 'black', polish: 'czarny', exampleEn: 'She is wearing a black dress.', examplePl: 'Ona ma na sobie czarną sukienkę.' },
+        { word: 'cinema', polish: 'kino', exampleEn: 'We go to the cinema every Friday.', examplePl: 'Chodzimy do kina w każdy piątek.' },
+        { word: 'daughter', polish: 'córka', exampleEn: 'Their daughter is very smart.', examplePl: 'Ich córka jest bardzo mądra.' },
+        { word: 'eat', polish: 'jeść', exampleEn: 'I eat breakfast at 7 o\'clock.', examplePl: 'Jem śniadanie o siódmej.' },
+        { word: 'from', polish: 'od, z', exampleEn: 'I come from Poland.', examplePl: 'Pochodzę z Polski.' },
+        { word: 'good', polish: 'dobry', exampleEn: 'This is a very good idea.', examplePl: 'To jest bardzo dobry pomysł.' },
+        { word: 'head', polish: 'głowa', exampleEn: 'I have a headache.', examplePl: 'Boli mnie głowa.' },
+        { word: 'cheese', polish: 'ser', exampleEn: 'I like cheese on my sandwich.', examplePl: 'Lubię ser w kanapce.' },
+        { word: 'important', polish: 'ważny', exampleEn: 'This is an important meeting.', examplePl: 'To jest ważne spotkanie.' },
+        { word: 'land', polish: 'ląd, lądować', exampleEn: 'The plane will land soon.', examplePl: 'Samolot wkrótce wyląduje.' },
+        { word: 'money', polish: 'pieniądze', exampleEn: 'I need to save more money.', examplePl: 'Muszę oszczędzać więcej pieniędzy.' },
+        { word: 'pay', polish: 'zapłacić, płacić', exampleEn: 'I have to pay the bill.', examplePl: 'Muszę zapłacić rachunek.' },
+        { word: 'problem', polish: 'problem', exampleEn: 'We have a small problem.', examplePl: 'Mamy mały problem.' },
+        { word: 'run', polish: 'biegać, biec', exampleEn: 'I run every morning.', examplePl: 'Biegam co rano.' },
+        { word: 'same', polish: 'podobny, taki sam', exampleEn: 'We have the same car.', examplePl: 'Mamy taki sam samochód.' },
+        { word: 'see', polish: 'widzieć', exampleEn: 'I can see the mountains.', examplePl: 'Widzę góry.' },
+        { word: 'send', polish: 'wysłać', exampleEn: 'I will send you an email.', examplePl: 'Wyślę ci maila.' },
+        { word: 'thing', polish: 'rzecz', exampleEn: 'This is an interesting thing.', examplePl: 'To jest ciekawa rzecz.' },
+        { word: 'work', polish: 'praca, pracować', exampleEn: 'I work from home. / This plan will not work.', examplePl: 'Pracuję z domu. / Ten plan nie zadziała.' }
+      ],
+ 8: [
+        { word: 'any', polish: 'każdy, jakikolwiek', exampleEn: 'Do you have any questions?', examplePl: 'Masz jakieś pytania?' },
+        { word: 'as', polish: 'tak jak, jako', exampleEn: 'She works as a teacher.', examplePl: 'Ona pracuje jako nauczycielka.' },
+        { word: 'better', polish: 'lepszy', exampleEn: 'This phone is better than the old one.', examplePl: 'Ten telefon jest lepszy niż stary.' },
+        { word: 'cold', polish: 'zimno, zimny', exampleEn: 'It is cold outside today.', examplePl: 'Dzisiaj na zewnątrz jest zimno.' },
+        { word: 'come', polish: 'przyjść, chodź', exampleEn: 'Come here please.', examplePl: 'Chodź tutaj proszę.' },
+        { word: 'doctor', polish: 'lekarz', exampleEn: 'I need to see a doctor.', examplePl: 'Muszę iść do lekarza.' },
+        { word: 'find', polish: 'odnaleźć, znaleźć', exampleEn: 'I can\'t find my keys.', examplePl: 'Nie mogę znaleźć kluczy.' },
+        { word: 'game', polish: 'gra', exampleEn: 'We play games on the weekend.', examplePl: 'Gramy w gry w weekend.' },
+        { word: 'idea', polish: 'pomysł', exampleEn: 'That\'s a great idea!', examplePl: 'To świetny pomysł!' },
+        { word: 'kind', polish: 'uprzejmy, rodzaj', exampleEn: 'She is a very kind person.', examplePl: 'Ona jest bardzo uprzejmą osobą.' },
+        { word: 'live', polish: 'żyć, mieszkać', exampleEn: 'I live in Warsaw.', examplePl: 'Mieszkam w Warszawie.' },
+        { word: 'make', polish: 'robić, sprawiać', exampleEn: 'I make breakfast every morning.', examplePl: 'Robię śniadanie co rano.' },
+        { word: 'peace', polish: 'pokój', exampleEn: 'We want peace in the world.', examplePl: 'Chcemy pokoju na świecie.' },
+        { word: 'popular', polish: 'popularny', exampleEn: 'This song is very popular.', examplePl: 'Ta piosenka jest bardzo popularna.' },
+        { word: 'right', polish: 'dobrze, prawy', exampleEn: 'You are right. / Turn right at the corner.', examplePl: 'Masz rację. / Skręć w prawo na rogu.' },
+        { word: 'small', polish: 'mały', exampleEn: 'I live in a small apartment.', examplePl: 'Mieszkam w małym mieszkaniu.' },
+        { word: 'so', polish: 'więc, tak', exampleEn: 'I am so happy to see you.', examplePl: 'Tak się cieszę, że cię widzę.' },
+        { word: 'some', polish: 'trochę, kilka', exampleEn: 'I need some water.', examplePl: 'Potrzebuję trochę wody.' },
+        { word: 'there', polish: 'tam', exampleEn: 'The book is over there.', examplePl: 'Książka jest tam.' },
+        { word: 'wait', polish: 'czekać', exampleEn: 'Please wait a moment.', examplePl: 'Proszę poczekać chwilę.' }
+      ],
+
+ 9: [
+        { word: 'again', polish: 'jeszcze raz, ponownie', exampleEn: 'Can you say it again?', examplePl: 'Możesz powiedzieć to jeszcze raz?' },
+        { word: 'back', polish: 'plecy, z powrotem', exampleEn: 'My back hurts. / Come back soon!', examplePl: 'Boli mnie plecy. / Wracaj szybko!' },
+        { word: 'could', polish: 'mógłby', exampleEn: 'Could you help me please?', examplePl: 'Czy mógłbyś mi pomóc?' },
+        { word: 'document', polish: 'dokument', exampleEn: 'I need to sign this document.', examplePl: 'Muszę podpisać ten dokument.' },
+        { word: 'egg', polish: 'jajko', exampleEn: 'I eat eggs for breakfast.', examplePl: 'Jem jajka na śniadanie.' },
+        { word: 'fire', polish: 'ogień', exampleEn: 'There is a fire in the kitchen!', examplePl: 'W kuchni jest pożar!' },
+        { word: 'give', polish: 'dać', exampleEn: 'Please give me the book.', examplePl: 'Proszę daj mi książkę.' },
+        { word: 'chance', polish: 'szansa', exampleEn: 'This is a good chance to learn.', examplePl: 'To dobra szansa na naukę.' },
+        { word: 'information', polish: 'informacja', exampleEn: 'I need more information.', examplePl: 'Potrzebuję więcej informacji.' },
+        { word: 'light', polish: 'lekki, światło', exampleEn: 'This bag is very light.', examplePl: 'Ta torba jest bardzo lekka.' },
+        { word: 'may', polish: 'może', exampleEn: 'May I open the window?', examplePl: 'Czy mogę otworzyć okno?' },
+        { word: 'often', polish: 'często', exampleEn: 'I often go running in the morning.', examplePl: 'Często biegam rano.' },
+        { word: 'prefer', polish: 'woleć', exampleEn: 'I prefer tea to coffee.', examplePl: 'Wolę herbatę od kawy.' },
+        { word: 'put', polish: 'położyć, włożyć', exampleEn: 'Put the book on the table.', examplePl: 'Połóż książkę na stole.' },
+        { word: 'red', polish: 'czerwony', exampleEn: 'She is wearing a red dress.', examplePl: 'Ma na sobie czerwoną sukienkę.' },
+        { word: 'stone', polish: 'kamień', exampleEn: 'The house is made of stone.', examplePl: 'Dom jest zbudowany z kamienia.' },
+        { word: 'such', polish: 'taki', exampleEn: 'It was such a nice day.', examplePl: 'To był taki miły dzień.' },
+        { word: 'think', polish: 'myśleć', exampleEn: 'I think you are right.', examplePl: 'Myślę, że masz rację.' },
+        { word: 'understand', polish: 'rozumieć', exampleEn: 'Do you understand?', examplePl: 'Rozumiesz?' },
+        { word: 'visit', polish: 'wizyta, odwiedzać', exampleEn: 'I want to visit my family.', examplePl: 'Chcę odwiedzić rodzinę.' }
+      ],
+
+ 10: [
+        { word: 'around', polish: 'wokół, około', exampleEn: 'We walked around the park.', examplePl: 'Spacerowaliśmy wokół parku.' },
+        { word: 'best', polish: 'najlepszy', exampleEn: 'This is the best day of my life.', examplePl: 'To jest najlepszy dzień w moim życiu.' },
+        { word: 'call', polish: 'dzwonić, połączenie', exampleEn: 'I will call you later.', examplePl: 'Zadzwonię do ciebie później.' },
+        { word: 'cut', polish: 'ciąć, skaleczenie', exampleEn: 'Be careful, don\'t cut your finger.', examplePl: 'Uważaj, nie skalecz się w palec.' },
+        { word: 'dinner', polish: 'obiad', exampleEn: 'We eat dinner at 7 pm.', examplePl: 'Jemy obiad o 19:00.' },
+        { word: 'down', polish: 'na dół', exampleEn: 'The cat ran down the stairs.', examplePl: 'Kot zbiegł po schodach.' },
+        { word: 'explain', polish: 'wyjaśnić', exampleEn: 'Can you explain this word?', examplePl: 'Możesz wyjaśnić to słowo?' },
+        { word: 'get', polish: 'dostać, dostać się', exampleEn: 'I get a present every birthday.', examplePl: 'Dostaję prezent na każde urodziny.' },
+        { word: 'interesting', polish: 'ciekawy', exampleEn: 'This book is very interesting.', examplePl: 'Ta książka jest bardzo ciekawa.' },
+        { word: 'long', polish: 'długi, długo', exampleEn: 'The movie is very long.', examplePl: 'Film jest bardzo długi.' },
+        { word: 'move', polish: 'ruszać się, przeprowadzać', exampleEn: 'Please move to the left.', examplePl: 'Proszę przesunąć się w lewo.' },
+        { word: 'out', polish: 'na zewnątrz', exampleEn: 'Let\'s go out for a walk.', examplePl: 'Chodźmy na spacer.' },
+        { word: 'page', polish: 'strona', exampleEn: 'Please open your book to page 10.', examplePl: 'Proszę otworzyć książkę na stronie 10.' },
+        { word: 'reach', polish: 'dosięgnąć, dotrzeć', exampleEn: 'Can you reach the top shelf?', examplePl: 'Możesz dosięgnąć górnej półki?' },
+        { word: 'rest', polish: 'odpoczynek, reszta', exampleEn: 'I need to rest after work.', examplePl: 'Muszę odpocząć po pracy.' },
+        { word: 'set', polish: 'zestaw, ustawiać', exampleEn: 'I bought a new set of dishes.', examplePl: 'Kupiłem nowy zestaw naczyń.' },
+        { word: 'should', polish: 'powinien', exampleEn: 'You should study more.', examplePl: 'Powinieneś więcej się uczyć.' },
+        { word: 'stand', polish: 'stać', exampleEn: 'Please stand up.', examplePl: 'Proszę wstać.' },
+        { word: 'time', polish: 'czas', exampleEn: 'I don\'t have time today.', examplePl: 'Nie mam dzisiaj czasu.' },
+        { word: 'up', polish: 'w górę, do góry', exampleEn: 'Look up at the sky.', examplePl: 'Spójrz w górę na niebo.' }
+      ],
+ 11: [
+        { word: 'age', polish: 'wiek', exampleEn: 'What is your age?', examplePl: 'Ile masz lat?' },
+        { word: 'because', polish: 'dlatego że, ponieważ', exampleEn: 'I am late because of traffic.', examplePl: 'Spóźniłem się przez korki.' },
+        { word: 'big', polish: 'duży', exampleEn: 'They live in a big house.', examplePl: 'Mieszkają w dużym domu.' },
+        { word: 'camera', polish: 'aparat fotograficzny', exampleEn: 'I bought a new camera.', examplePl: 'Kupiłem nowy aparat.' },
+        { word: 'city', polish: 'miasto', exampleEn: 'I live in a big city.', examplePl: 'Mieszkam w dużym mieście.' },
+        { word: 'dress', polish: 'sukienka', exampleEn: 'She is wearing a beautiful dress.', examplePl: 'Ma na sobie piękną sukienkę.' },
+        { word: 'evening', polish: 'wieczór', exampleEn: 'We meet every evening.', examplePl: 'Spotykamy się co wieczór.' },
+        { word: 'free', polish: 'wolny, darmowy', exampleEn: 'Are you free tomorrow? / This museum is free.', examplePl: 'Czy jesteś jutro wolny? / To muzeum jest darmowe.' },
+        { word: 'have', polish: 'mieć', exampleEn: 'I have two brothers.', examplePl: 'Mam dwóch braci.' },
+        { word: 'ill', polish: 'chory', exampleEn: 'She is ill today.', examplePl: 'Ona jest dzisiaj chora.' },
+        { word: 'like', polish: 'lubić, taki jak', exampleEn: 'I like coffee. / She looks like her mother.', examplePl: 'Lubię kawę. / Ona wygląda jak jej matka.' },
+        { word: 'mother', polish: 'matka, mama', exampleEn: 'My mother is a teacher.', examplePl: 'Moja mama jest nauczycielką.' },
+        { word: 'old', polish: 'stary', exampleEn: 'He is an old man.', examplePl: 'On jest starym człowiekiem.' },
+        { word: 'police', polish: 'policja', exampleEn: 'The police arrived quickly.', examplePl: 'Policja przyjechała szybko.' },
+        { word: 'remember', polish: 'pamiętać', exampleEn: 'I can\'t remember his name.', examplePl: 'Nie mogę pamiętać jego imienia.' },
+        { word: 'street', polish: 'ulica', exampleEn: 'I live on this street.', examplePl: 'Mieszkam na tej ulicy.' },
+        { word: 'study', polish: 'uczyć się, studiować', exampleEn: 'I study English every day.', examplePl: 'Uczę się angielskiego codziennie.' },
+        { word: 'teacher', polish: 'nauczyciel', exampleEn: 'My teacher is very kind.', examplePl: 'Mój nauczyciel jest bardzo miły.' },
+        { word: 'voice', polish: 'głos', exampleEn: 'She has a beautiful voice.', examplePl: 'Ona ma piękny głos.' },
+        { word: 'water', polish: 'woda', exampleEn: 'I drink water every day.', examplePl: 'Piję wodę codziennie.' }
+      ],
+
+ 12: [
+        { word: 'also', polish: 'również', exampleEn: 'I also like music.', examplePl: 'Ja również lubię muzykę.' },
+        { word: 'box', polish: 'pudełko', exampleEn: 'The gift is in the box.', examplePl: 'Prezent jest w pudełku.' },
+        { word: 'class', polish: 'klasa', exampleEn: 'We have English class at 10.', examplePl: 'Mamy lekcję angielskiego o 10.' },
+        { word: 'difficult', polish: 'trudny', exampleEn: 'This exercise is difficult.', examplePl: 'To ćwiczenie jest trudne.' },
+        { word: 'drive', polish: 'prowadzić, jazda', exampleEn: 'I can drive a car.', examplePl: 'Umiem prowadzić samochód.' },
+        { word: 'food', polish: 'jedzenie', exampleEn: 'I like Italian food.', examplePl: 'Lubię włoskie jedzenie.' },
+        { word: 'great', polish: 'świetny', exampleEn: 'This is a great idea!', examplePl: 'To świetny pomysł!' },
+        { word: 'happy', polish: 'szczęśliwy', exampleEn: 'She looks very happy.', examplePl: 'Ona wygląda na bardzo szczęśliwą.' },
+        { word: 'change', polish: 'zmiana, zmieniać', exampleEn: 'I need to change my clothes.', examplePl: 'Muszę się przebrać.' },
+        { word: 'juice', polish: 'sok', exampleEn: 'I drink orange juice every morning.', examplePl: 'Piję sok pomarańczowy co rano.' },
+        { word: 'meet', polish: 'spotykać się', exampleEn: 'Let\'s meet at the station.', examplePl: 'Spotkajmy się na stacji.' },
+        { word: 'need', polish: 'potrzebować', exampleEn: 'I need some help.', examplePl: 'Potrzebuję pomocy.' },
+        { word: 'pretty', polish: 'ładny', exampleEn: 'She is very pretty.', examplePl: 'Ona jest bardzo ładna.' },
+        { word: 'quite', polish: 'całkiem', exampleEn: 'The movie was quite good.', examplePl: 'Film był całkiem dobry.' },
+        { word: 'real', polish: 'prawdziwy', exampleEn: 'This is a real diamond.', examplePl: 'To jest prawdziwy diament.' },
+        { word: 'sad', polish: 'smutny', exampleEn: 'Why are you sad?', examplePl: 'Dlaczego jesteś smutny?' },
+        { word: 'spring', polish: 'wiosna', exampleEn: 'Spring is my favorite season.', examplePl: 'Wiosna to moja ulubiona pora roku.' },
+        { word: 'star', polish: 'gwiazda', exampleEn: 'I can see many stars at night.', examplePl: 'W nocy widzę wiele gwiazd.' },
+        { word: 'take', polish: 'brać, zabrać', exampleEn: 'Please take this book.', examplePl: 'Proszę wziąć tę książkę.' },
+        { word: 'yes', polish: 'tak', exampleEn: 'Yes, I understand.', examplePl: 'Tak, rozumiem.' }
+      ],
+
+ 13: [
+        { word: 'action', polish: 'akcja', exampleEn: 'The movie is full of action.', examplePl: 'Film jest pełen akcji.' },
+        { word: 'alone', polish: 'sam', exampleEn: 'I don\'t like to be alone.', examplePl: 'Nie lubię być sam.' },
+        { word: 'breakfast', polish: 'śniadanie', exampleEn: 'I eat breakfast at home.', examplePl: 'Jem śniadanie w domu.' },
+        { word: 'continue', polish: 'kontynuować', exampleEn: 'Please continue reading.', examplePl: 'Proszę kontynuować czytanie.' },
+        { word: 'dead', polish: 'martwy', exampleEn: 'The phone is dead.', examplePl: 'Telefon jest rozładowany.' },
+        { word: 'enjoy', polish: 'cieszyć się', exampleEn: 'I enjoy learning English.', examplePl: 'Cieszę się, że uczę się angielskiego.' },
+        { word: 'full', polish: 'pełny', exampleEn: 'The glass is full of water.', examplePl: 'Szklanka jest pełna wody.' },
+        { word: 'garden', polish: 'ogród', exampleEn: 'We have a beautiful garden.', examplePl: 'Mamy piękny ogród.' },
+        { word: 'house', polish: 'dom', exampleEn: 'I live in a small house.', examplePl: 'Mieszkam w małym domu.' },
+        { word: 'journey', polish: 'podróż', exampleEn: 'It was a long journey.', examplePl: 'To była długa podróż.' },
+        { word: 'much', polish: 'dużo', exampleEn: 'I don\'t have much time.', examplePl: 'Nie mam dużo czasu.' },
+        { word: 'nothing', polish: 'nic', exampleEn: 'I have nothing to do.', examplePl: 'Nie mam nic do roboty.' },
+        { word: 'phone', polish: 'telefon', exampleEn: 'My phone is ringing.', examplePl: 'Mój telefon dzwoni.' },
+        { word: 'price', polish: 'cena', exampleEn: 'The price is too high.', examplePl: 'Cena jest zbyt wysoka.' },
+        { word: 'result', polish: 'wynik', exampleEn: 'The result is very good.', examplePl: 'Wynik jest bardzo dobry.' },
+        { word: 'sister', polish: 'siostra', exampleEn: 'My sister is younger than me.', examplePl: 'Moja siostra jest młodsza ode mnie.' },
+        { word: 'sun', polish: 'słońce', exampleEn: 'The sun is shining.', examplePl: 'Słońce świeci.' },
+        { word: 'tell', polish: 'powiedzieć', exampleEn: 'Please tell me the truth.', examplePl: 'Proszę powiedzieć mi prawdę.' },
+        { word: 'view', polish: 'widok', exampleEn: 'The view from the mountain is amazing.', examplePl: 'Widok z góry jest niesamowity.' },
+        { word: 'with', polish: 'z', exampleEn: 'I live with my family.', examplePl: 'Mieszkam z rodziną.' }
+      ],
+ 14: [
+        { word: 'against', polish: 'przeciwko', exampleEn: 'They played against a strong team.', examplePl: 'Grali przeciwko silnej drużynie.' },
+        { word: 'bus', polish: 'autobus', exampleEn: 'I go to work by bus.', examplePl: 'Jadę do pracy autobusem.' },
+        { word: 'company', polish: 'firma, towarzystwo', exampleEn: 'I work for a big company.', examplePl: 'Pracuję w dużej firmie.' },
+        { word: 'desert', polish: 'pustynia', exampleEn: 'The Sahara is a big desert.', examplePl: 'Sahara to duża pustynia.' },
+        { word: 'expensive', polish: 'kosztowny, drogi', exampleEn: 'This phone is very expensive.', examplePl: 'Ten telefon jest bardzo drogi.' },
+        { word: 'flower', polish: 'kwiat', exampleEn: 'She gave me a beautiful flower.', examplePl: 'Dała mi piękny kwiat.' },
+        { word: 'green', polish: 'zielony', exampleEn: 'The grass is green.', examplePl: 'Trawa jest zielona.' },
+        { word: 'church', polish: 'kościół', exampleEn: 'We go to church on Sunday.', examplePl: 'Chodzimy do kościoła w niedzielę.' },
+        { word: 'impossible', polish: 'niemożliwy', exampleEn: 'It seems impossible, but it\'s true.', examplePl: 'Wydaje się niemożliwe, ale to prawda.' },
+        { word: 'leave', polish: 'wychodzić, opuszczać', exampleEn: 'I leave home at 8 o\'clock.', examplePl: 'Wychodzę z domu o ósmej.' },
+        { word: 'month', polish: 'miesiąc', exampleEn: 'I will visit you next month.', examplePl: 'Odwiedzę cię w następnym miesiącu.' },
+        { word: 'on', polish: 'na', exampleEn: 'The book is on the table.', examplePl: 'Książka jest na stole.' },
+        { word: 'plan', polish: 'plan', exampleEn: 'I have a good plan.', examplePl: 'Mam dobry plan.' },
+        { word: 'possible', polish: 'możliwy', exampleEn: 'Everything is possible.', examplePl: 'Wszystko jest możliwe.' },
+        { word: 'return', polish: 'powrót, wracać', exampleEn: 'I will return tomorrow.', examplePl: 'Wrócę jutro.' },
+        { word: 'save', polish: 'zapisać, oszczędzać', exampleEn: 'Please save this file. / I save money every month.', examplePl: 'Proszę zapisać ten plik. / Oszczędzam pieniądze co miesiąc.' },
+        { word: 'sea', polish: 'morze', exampleEn: 'I love swimming in the sea.', examplePl: 'Lubię pływać w morzu.' },
+        { word: 'something', polish: 'coś', exampleEn: 'I want something to drink.', examplePl: 'Chcę coś do picia.' },
+        { word: 'together', polish: 'razem', exampleEn: 'We work together.', examplePl: 'Pracujemy razem.' },
+        { word: 'woman', polish: 'kobieta', exampleEn: 'She is a very smart woman.', examplePl: 'Ona jest bardzo mądrą kobietą.' }
+      ],
+
+ 15: [
+        { word: 'anything', polish: 'cokolwiek', exampleEn: 'Do you need anything?', examplePl: 'Potrzebujesz czegoś?' },
+        { word: 'army', polish: 'armia', exampleEn: 'He joined the army.', examplePl: 'Wstąpił do armii.' },
+        { word: 'bad', polish: 'zły', exampleEn: 'This is a bad idea.', examplePl: 'To jest zły pomysł.' },
+        { word: 'cover', polish: 'pokrywa, przykrywać', exampleEn: 'The book has a nice cover.', examplePl: 'Książka ma ładną okładkę.' },
+        { word: 'culture', polish: 'kultura', exampleEn: 'I like Polish culture.', examplePl: 'Lubię polską kulturę.' },
+        { word: 'decision', polish: 'decyzja', exampleEn: 'It was a difficult decision.', examplePl: 'To była trudna decyzja.' },
+        { word: 'example', polish: 'przykład', exampleEn: 'Can you give me an example?', examplePl: 'Możesz podać przykład?' },
+        { word: 'feel', polish: 'czuć', exampleEn: 'I feel happy today.', examplePl: 'Czuję się dzisiaj szczęśliwy.' },
+        { word: 'how', polish: 'jak', exampleEn: 'How are you?', examplePl: 'Jak się masz?' },
+        { word: 'island', polish: 'wyspa', exampleEn: 'We visited a beautiful island.', examplePl: 'Odwiedziliśmy piękną wyspę.' },
+        { word: 'member', polish: 'członek', exampleEn: 'He is a member of the club.', examplePl: 'Jest członkiem klubu.' },
+        { word: 'next', polish: 'następny', exampleEn: 'See you next week.', examplePl: 'Do zobaczenia w przyszłym tygodniu.' },
+        { word: 'position', polish: 'pozycja, stanowisko', exampleEn: 'What is your position in the company?', examplePl: 'Jakie masz stanowisko w firmie?' },
+        { word: 'present', polish: 'obecny, prezent', exampleEn: 'All students are present today.', examplePl: 'Wszyscy uczniowie są dzisiaj obecni.' },
+        { word: 'record', polish: 'rekord', exampleEn: 'He broke the world record.', examplePl: 'Pobił rekord świata.' },
+        { word: 'sleep', polish: 'spać', exampleEn: 'I sleep eight hours every night.', examplePl: 'Śpię osiem godzin co noc.' },
+        { word: 'sweet', polish: 'słodki', exampleEn: 'This cake is very sweet.', examplePl: 'To ciasto jest bardzo słodkie.' },
+        { word: 'try', polish: 'próbować', exampleEn: 'You should try this food.', examplePl: 'Powinieneś spróbować tego jedzenia.' },
+        { word: 'under', polish: 'pod', exampleEn: 'The cat is under the table.', examplePl: 'Kot jest pod stołem.' },
+        { word: 'world', polish: 'świat', exampleEn: 'He travels around the world.', examplePl: 'Podróżuje po całym świecie.' }
+      ],
+
+ 16: [
+        { word: 'after', polish: 'po', exampleEn: 'We will go home after the movie.', examplePl: 'Pójdziemy do domu po filmie.' },
+        { word: 'bed', polish: 'łóżko', exampleEn: 'I go to bed at 11 pm.', examplePl: 'Idę spać o 23:00.' },
+        { word: 'buy', polish: 'kupić', exampleEn: 'I want to buy a new phone.', examplePl: 'Chcę kupić nowy telefon.' },
+        { word: 'catch', polish: 'łapać', exampleEn: 'Can you catch the ball?', examplePl: 'Potrafisz złapać piłkę?' },
+        { word: 'corner', polish: 'kąt, róg', exampleEn: 'The shop is on the corner.', examplePl: 'Sklep jest na rogu.' },
+        { word: 'distance', polish: 'dystans', exampleEn: 'The distance between the cities is 100 km.', examplePl: 'Odległość między miastami wynosi 100 km.' },
+        { word: 'education', polish: 'edukacja', exampleEn: 'Education is very important.', examplePl: 'Edukacja jest bardzo ważna.' },
+        { word: 'fast', polish: 'szybki', exampleEn: 'He runs very fast.', examplePl: 'On biega bardzo szybko.' },
+        { word: 'here', polish: 'tutaj', exampleEn: 'Come here please.', examplePl: 'Chodź tutaj proszę.' },
+        { word: 'interest', polish: 'zainteresowanie', exampleEn: 'I have no interest in football.', examplePl: 'Nie mam zainteresowania piłką nożną.' },
+        { word: 'letter', polish: 'list', exampleEn: 'I received a letter from my friend.', examplePl: 'Otrzymałem list od przyjaciela.' },
+        { word: 'never', polish: 'nigdy', exampleEn: 'I have never been to Asia.', examplePl: 'Nigdy nie byłem w Azji.' },
+        { word: 'part', polish: 'część', exampleEn: 'This is my favorite part of the book.', examplePl: 'To jest moja ulubiona część książki.' },
+        { word: 'president', polish: 'prezydent', exampleEn: 'The president gave a speech.', examplePl: 'Prezydent wygłosił przemówienie.' },
+        { word: 'round', polish: 'okrągły', exampleEn: 'The table is round.', examplePl: 'Stół jest okrągły.' },
+        { word: 'several', polish: 'kilka', exampleEn: 'I have several questions.', examplePl: 'Mam kilka pytań.' },
+        { word: 'sound', polish: 'dźwięk', exampleEn: 'I like the sound of the ocean.', examplePl: 'Lubię dźwięk oceanu.' },
+        { word: 'story', polish: 'fabuła, historia', exampleEn: 'She told me an interesting story.', examplePl: 'Opowiedziała mi ciekawą historię.' },
+        { word: 'talk', polish: 'rozmowa, rozmawiać', exampleEn: 'We had a long talk yesterday.', examplePl: 'Mieliśmy wczoraj długą rozmowę.' },
+        { word: 'week', polish: 'tydzień', exampleEn: 'See you next week.', examplePl: 'Do zobaczenia w przyszłym tygodniu.' }
+      ],
+ 17: [
+        { word: 'almost', polish: 'prawie', exampleEn: 'I almost missed the train.', examplePl: 'Prawie spóźniłem się na pociąg.' },
+        { word: 'bread', polish: 'chleb', exampleEn: 'I eat bread with butter every morning.', examplePl: 'Jem chleb z masłem co rano.' },
+        { word: 'control', polish: 'kontrola, kontrolować', exampleEn: 'You need better control of your emotions.', examplePl: 'Potrzebujesz lepszej kontroli nad emocjami.' },
+        { word: 'dear', polish: 'drogi', exampleEn: 'Dear John, how are you? / This ring is very dear to me.', examplePl: 'Drogi Johnie, jak się masz? / Ten pierścionek jest dla mnie bardzo cenny.' },
+        { word: 'every', polish: 'każdy', exampleEn: 'Every student must attend the class.', examplePl: 'Każdy uczeń musi być obecny na lekcji.' },
+        { word: 'few', polish: 'mało, kilka', exampleEn: 'I have few friends in this city.', examplePl: 'Mam mało przyjaciół w tym mieście.' },
+        { word: 'gold', polish: 'złoto', exampleEn: 'She wears a gold necklace.', examplePl: 'Ona nosi złoty naszyjnik.' },
+        { word: 'chief', polish: 'szef', exampleEn: 'He is the chief of the department.', examplePl: 'Jest szefem działu.' },
+        { word: 'invite', polish: 'zapraszać', exampleEn: 'I want to invite you to my birthday party.', examplePl: 'Chcę cię zaprosić na moje urodziny.' },
+        { word: 'late', polish: 'późno, spóźniony', exampleEn: 'I arrived late to the meeting. / It is too late now.', examplePl: 'Spóźniłem się na spotkanie. / Jest już za późno.' },
+        { word: 'most', polish: 'większość', exampleEn: 'Most people like music.', examplePl: 'Większość ludzi lubi muzykę.' },
+        { word: 'only', polish: 'tylko', exampleEn: 'I have only one question.', examplePl: 'Mam tylko jedno pytanie.' },
+        { word: 'product', polish: 'produkt', exampleEn: 'This is a high quality product.', examplePl: 'To jest produkt wysokiej jakości.' },
+        { word: 'public', polish: 'publiczny', exampleEn: 'This is a public library.', examplePl: 'To jest biblioteka publiczna.' },
+        { word: 'receive', polish: 'otrzymać', exampleEn: 'I received your email yesterday.', examplePl: 'Otrzymałem twojego maila wczoraj.' },
+        { word: 'sorry', polish: 'przepraszam', exampleEn: 'I am sorry for being late.', examplePl: 'Przepraszam za spóźnienie.' },
+        { word: 'strong', polish: 'silny', exampleEn: 'He is very strong and healthy.', examplePl: 'On jest bardzo silny i zdrowy.' },
+        { word: 'then', polish: 'następnie, wtedy', exampleEn: 'First we eat, then we go.', examplePl: 'Najpierw jemy, następnie idziemy.' },
+        { word: 'too', polish: 'też, zbyt', exampleEn: 'I like it too. / It is too expensive.', examplePl: 'Mnie też się podoba. / To jest zbyt drogie.' },
+        { word: 'way', polish: 'sposób, droga', exampleEn: 'This is the best way to learn English.', examplePl: 'To jest najlepszy sposób na naukę angielskiego.' }
+      ],
+
+ 18: [
+        { word: 'across', polish: 'przez', exampleEn: 'We walked across the bridge.', examplePl: 'Przeszliśmy przez most.' },
+        { word: 'art', polish: 'sztuka', exampleEn: 'I love modern art.', examplePl: 'Lubię nowoczesną sztukę.' },
+        { word: 'bring', polish: 'przynieść', exampleEn: 'Please bring your notebook.', examplePl: 'Proszę przynieść zeszyt.' },
+        { word: 'carry', polish: 'nieść', exampleEn: 'Can you carry this heavy bag?', examplePl: 'Możesz ponieść tę ciężką torbę?' },
+        { word: 'confirm', polish: 'potwierdzać', exampleEn: 'Please confirm your arrival time.', examplePl: 'Proszę potwierdzić godzinę przyjazdu.' },
+        { word: 'die', polish: 'umierać', exampleEn: 'Plants die without water.', examplePl: 'Rośliny umierają bez wody.' },
+        { word: 'east', polish: 'wschód', exampleEn: 'The sun rises in the east.', examplePl: 'Słońce wschodzi na wschodzie.' },
+        { word: 'group', polish: 'grupa', exampleEn: 'We work in small groups.', examplePl: 'Pracujemy w małych grupach.' },
+        { word: 'hope', polish: 'nadzieja', exampleEn: 'I hope you feel better soon.', examplePl: 'Mam nadzieję, że szybko się lepiej poczujesz.' },
+        { word: 'industry', polish: 'przemysł', exampleEn: 'The car industry is growing.', examplePl: 'Przemysł samochodowy się rozwija.' },
+        { word: 'look', polish: 'patrzeć, wyglądać', exampleEn: 'Look at this beautiful view. / You look tired today.', examplePl: 'Popatrz na ten piękny widok. / Wyglądasz dzisiaj na zmęczonego.' },
+        { word: 'must', polish: 'musieć', exampleEn: 'You must finish your homework.', examplePl: 'Musisz skończyć zadanie domowe.' },
+        { word: 'own', polish: 'posiadać, własny', exampleEn: 'I own a small apartment.', examplePl: 'Posiadam małe mieszkanie.' },
+        { word: 'personal', polish: 'osobisty', exampleEn: 'This is my personal phone number.', examplePl: 'To jest mój osobisty numer telefonu.' },
+        { word: 'reason', polish: 'powód', exampleEn: 'What is the reason for your visit?', examplePl: 'Jaki jest powód twojej wizyty?' },
+        { word: 'service', polish: 'usługa', exampleEn: 'The service here is excellent.', examplePl: 'Obsługa tutaj jest doskonała.' },
+        { word: 'shall', polish: 'powinien', exampleEn: 'Shall we start the meeting?', examplePl: 'Czy powinniśmy zacząć spotkanie?' },
+        { word: 'stay', polish: 'zostać', exampleEn: 'I will stay at home today.', examplePl: 'Zostanę dzisiaj w domu.' },
+        { word: 'their', polish: 'ich', exampleEn: 'This is their new car.', examplePl: 'To jest ich nowy samochód.' },
+        { word: 'wife', polish: 'żona', exampleEn: 'My wife is a nurse.', examplePl: 'Moja żona jest pielęgniarką.' }
+      ],
+
+ 19: [
+        { word: 'away', polish: 'z dala', exampleEn: 'He moved away last year.', examplePl: 'Przeprowadził się rok temu.' },
+        { word: 'beautiful', polish: 'piękny', exampleEn: 'She has a beautiful voice.', examplePl: 'Ma piękny głos.' },
+        { word: 'care', polish: 'opieka, dbać', exampleEn: 'Take care of yourself. / I don\'t care about that.', examplePl: 'Dbaj o siebie. / Nie dbam o to.' },
+        { word: 'cost', polish: 'koszt', exampleEn: 'What is the total cost?', examplePl: 'Jaki jest całkowity koszt?' },
+        { word: 'deep', polish: 'głęboki', exampleEn: 'The pool is very deep.', examplePl: 'Basen jest bardzo głęboki.' },
+        { word: 'enough', polish: 'wystarczająco', exampleEn: 'I have enough money for the trip.', examplePl: 'Mam wystarczająco pieniędzy na wyjazd.' },
+        { word: 'fight', polish: 'walka', exampleEn: 'They had a big fight yesterday.', examplePl: 'Mieli wczoraj dużą kłótnię.' },
+        { word: 'garage', polish: 'garaż', exampleEn: 'The car is parked in the garage.', examplePl: 'Samochód stoi w garażu.' },
+        { word: 'into', polish: 'w', exampleEn: 'She went into the house.', examplePl: 'Weszła do domu.' },
+        { word: 'keep', polish: 'trzymać', exampleEn: 'Please keep this secret.', examplePl: 'Proszę zachować tę tajemnicę.' },
+        { word: 'miss', polish: 'tęsknić, opuścić', exampleEn: 'I miss my family. / Don\'t miss the train!', examplePl: 'Tęsknię za rodziną. / Nie spóźnij się na pociąg!' },
+        { word: 'other', polish: 'inny', exampleEn: 'The other students are waiting.', examplePl: 'Pozostali uczniowie czekają.' },
+        { word: 'player', polish: 'gracz', exampleEn: 'He is a very good football player.', examplePl: 'On jest bardzo dobrym piłkarzem.' },
+        { word: 'rather', polish: 'raczej', exampleEn: 'I would rather stay home.', examplePl: 'Wolałbym zostać w domu.' },
+        { word: 'remain', polish: 'pozostawać', exampleEn: 'Please remain seated.', examplePl: 'Proszę pozostać na miejscach.' },
+        { word: 'side', polish: 'bok, strona', exampleEn: 'Stand by my side.', examplePl: 'Stań przy moim boku.' },
+        { word: 'south', polish: 'południe', exampleEn: 'The south of Poland is beautiful.', examplePl: 'Południe Polski jest piękne.' },
+        { word: 'true', polish: 'prawda, prawdziwy', exampleEn: 'This story is true.', examplePl: 'Ta historia jest prawdziwa.' },
+        { word: 'use', polish: 'używać', exampleEn: 'How do you use this app?', examplePl: 'Jak używasz tej aplikacji?' },
+        { word: 'who', polish: 'kto', exampleEn: 'Who is that person?', examplePl: 'Kim jest ta osoba?' }
+      ],
+ 20: [
+        { word: 'already', polish: 'już', exampleEn: 'I have already finished my homework.', examplePl: 'Już skończyłem zadanie domowe.' },
+        { word: 'become', polish: 'zostać, stawać się', exampleEn: 'She wants to become a doctor.', examplePl: 'Chce zostać lekarzem.' },
+        { word: 'cause', polish: 'przyczyna', exampleEn: 'What is the cause of the problem?', examplePl: 'Jaka jest przyczyna problemu?' },
+        { word: 'certain', polish: 'pewny', exampleEn: 'I am certain that he is right.', examplePl: 'Jestem pewien, że ma rację.' },
+        { word: 'describe', polish: 'opisać', exampleEn: 'Can you describe your house?', examplePl: 'Możesz opisać swój dom?' },
+        { word: 'dry', polish: 'suchy', exampleEn: 'The clothes are dry now.', examplePl: 'Ubrania są już suche.' },
+        { word: 'expect', polish: 'oczekiwać', exampleEn: 'I expect you to arrive on time.', examplePl: 'Spodziewam się, że przyjedziesz punktualnie.' },
+        { word: 'fact', polish: 'fakt', exampleEn: 'It is a well-known fact.', examplePl: 'To jest dobrze znany fakt.' },
+        { word: 'hard', polish: 'ciężko, twardy', exampleEn: 'This work is very hard. / The bed is too hard.', examplePl: 'Ta praca jest bardzo ciężka. / Łóżko jest zbyt twarde.' },
+        { word: 'include', polish: 'zawierać', exampleEn: 'The price includes breakfast.', examplePl: 'Cena zawiera śniadanie.' },
+        { word: 'let', polish: 'pozwolić', exampleEn: 'Let me help you.', examplePl: 'Pozwól, że ci pomogę.' },
+        { word: 'moment', polish: 'chwila', exampleEn: 'Wait a moment please.', examplePl: 'Poczekaj chwilę proszę.' },
+        { word: 'power', polish: 'moc, siła', exampleEn: 'The engine has a lot of power.', examplePl: 'Silnik ma dużą moc.' },
+        { word: 'provide', polish: 'zapewniać', exampleEn: 'The school provides books.', examplePl: 'Szkoła zapewnia książki.' },
+        { word: 'report', polish: 'raport', exampleEn: 'I need to write a report.', examplePl: 'Muszę napisać raport.' },
+        { word: 'seat', polish: 'siedzenie', exampleEn: 'Please take a seat.', examplePl: 'Proszę usiąść.' },
+        { word: 'single', polish: 'pojedynczy', exampleEn: 'I have a single ticket.', examplePl: 'Mam bilet w jedną stronę.' },
+        { word: 'system', polish: 'system', exampleEn: 'The new system works well.', examplePl: 'Nowy system działa dobrze.' },
+        { word: 'through', polish: 'przez', exampleEn: 'We drove through the city.', examplePl: 'Przejechaliśmy przez miasto.' },
+        { word: 'which', polish: 'który', exampleEn: 'Which book do you prefer?', examplePl: 'Którą książkę wolisz?' }
+      ],
+
+ 21: [
+        { word: 'apple', polish: 'jabłko', exampleEn: 'I eat an apple every day.', examplePl: 'Jem jabłko codziennie.' },
+        { word: 'blue', polish: 'niebieski', exampleEn: 'The sky is blue.', examplePl: 'Niebo jest niebieskie.' },
+        { word: 'clock', polish: 'zegar', exampleEn: 'Look at the clock.', examplePl: 'Spójrz na zegar.' },
+        { word: 'colour', polish: 'kolor', exampleEn: 'What is your favourite colour?', examplePl: 'Jaki jest twój ulubiony kolor?' },
+        { word: 'different', polish: 'różny', exampleEn: 'They have different opinions.', examplePl: 'Mają różne opinie.' },
+        { word: 'earth', polish: 'Ziemia', exampleEn: 'The Earth is round.', examplePl: 'Ziemia jest okrągła.' },
+        { word: 'film', polish: 'film', exampleEn: 'I watched an interesting film.', examplePl: 'Obejrzałem ciekawy film.' },
+        { word: 'glad', polish: 'zadowolony', exampleEn: 'I am glad to see you.', examplePl: 'Cieszę się, że cię widzę.' },
+        { word: 'hour', polish: 'godzina', exampleEn: 'I waited for two hours.', examplePl: 'Czekałem dwie godziny.' },
+        { word: 'just', polish: 'właśnie, tylko', exampleEn: 'I just arrived. / It is just a game.', examplePl: 'Właśnie przyjechałem. / To tylko gra.' },
+        { word: 'love', polish: 'miłość, kochać', exampleEn: 'I love my family.', examplePl: 'Kocham moją rodzinę.' },
+        { word: 'number', polish: 'numer', exampleEn: 'What is your phone number?', examplePl: 'Jaki jest twój numer telefonu?' },
+        { word: 'pencil', polish: 'ołówek', exampleEn: 'I write with a pencil.', examplePl: 'Piszę ołówkiem.' },
+        { word: 'quick', polish: 'szybki', exampleEn: 'He is a quick learner.', examplePl: 'Szybko się uczy.' },
+        { word: 'rain', polish: 'deszcz', exampleEn: 'It is raining outside.', examplePl: 'Na zewnątrz pada deszcz.' },
+        { word: 'simple', polish: 'prosty', exampleEn: 'This question is simple.', examplePl: 'To pytanie jest proste.' },
+        { word: 'summer', polish: 'lato', exampleEn: 'I like summer holidays.', examplePl: 'Lubię wakacje letnie.' },
+        { word: 'town', polish: 'miasto', exampleEn: 'I live in a small town.', examplePl: 'Mieszkam w małym mieście.' },
+        { word: 'tree', polish: 'drzewo', exampleEn: 'There is a big tree in the garden.', examplePl: 'W ogrodzie jest duże drzewo.' },
+        { word: 'window', polish: 'okno', exampleEn: 'Open the window please.', examplePl: 'Proszę otworzyć okno.' }
+      ],
+
+ 22: [
+        { word: 'address', polish: 'adres', exampleEn: 'What is your home address?', examplePl: 'Jaki jest twój adres domowy?' },
+        { word: 'building', polish: 'budynek', exampleEn: 'This is a tall building.', examplePl: 'To jest wysoki budynek.' },
+        { word: 'computer', polish: 'komputer', exampleEn: 'I use my computer every day.', examplePl: 'Używam komputera codziennie.' },
+        { word: 'cross', polish: 'krzyż', exampleEn: 'There is a cross on the hill.', examplePl: 'Na wzgórzu jest krzyż.' },
+        { word: 'desk', polish: 'biurko', exampleEn: 'My books are on the desk.', examplePl: 'Moje książki są na biurku.' },
+        { word: 'ear', polish: 'ucho', exampleEn: 'I have pain in my ear.', examplePl: 'Boli mnie ucho.' },
+        { word: 'fish', polish: 'ryba', exampleEn: 'I like to eat grilled fish.', examplePl: 'Lubię jeść grillowaną rybę.' },
+        { word: 'glass', polish: 'szkło', exampleEn: 'The glass is on the table.', examplePl: 'Szklanka stoi na stole.' },
+        { word: 'ice', polish: 'lód', exampleEn: 'There is ice in my drink.', examplePl: 'W moim napoju jest lód.' },
+        { word: 'key', polish: 'klucz', exampleEn: 'I lost my house key.', examplePl: 'Zgubiłem klucz do domu.' },
+        { word: 'minute', polish: 'minuta', exampleEn: 'Wait a minute please.', examplePl: 'Poczekaj minutę proszę.' },
+        { word: 'office', polish: 'biuro', exampleEn: 'I work in an office.', examplePl: 'Pracuję w biurze.' },
+        { word: 'parent', polish: 'rodzic', exampleEn: 'My parents are on holiday.', examplePl: 'Moi rodzice są na wakacjach.' },
+        { word: 'post', polish: 'poczta', exampleEn: 'I sent the letter by post.', examplePl: 'Wysłałem list pocztą.' },
+        { word: 'rock', polish: 'skała', exampleEn: 'The mountain is made of rock.', examplePl: 'Góra jest zbudowana ze skały.' },
+        { word: 'search', polish: 'szukać', exampleEn: 'I need to search for information.', examplePl: 'Muszę poszukać informacji.' },
+        { word: 'sport', polish: 'sport', exampleEn: 'I play sport every weekend.', examplePl: 'Gram w sport w każdy weekend.' },
+        { word: 'tea', polish: 'herbata', exampleEn: 'Would you like some tea?', examplePl: 'Chcesz herbaty?' },
+        { word: 'valley', polish: 'dolina', exampleEn: 'The village is in a beautiful valley.', examplePl: 'Wioska leży w pięknej dolinie.' },
+        { word: 'walk', polish: 'spacerować', exampleEn: 'I like to walk in the park.', examplePl: 'Lubię spacerować po parku.' }
+      ],
+ 23: [
+        { word: 'airport', polish: 'lotnisko', exampleEn: 'We arrived at the airport early.', examplePl: 'Przyjechaliśmy na lotnisko wcześnie.' },
+        { word: 'baby', polish: 'niemowlę', exampleEn: 'The baby is sleeping.', examplePl: 'Niemowlę śpi.' },
+        { word: 'card', polish: 'karta', exampleEn: 'I need to buy a birthday card.', examplePl: 'Muszę kupić kartkę urodzinową.' },
+        { word: 'central', polish: 'centralny', exampleEn: 'The hotel is in a central location.', examplePl: 'Hotel jest w centralnej lokalizacji.' },
+        { word: 'direction', polish: 'kierunek', exampleEn: 'Which direction should we go?', examplePl: 'W którym kierunku powinniśmy iść?' },
+        { word: 'dollar', polish: 'dolar', exampleEn: 'It costs twenty dollars.', examplePl: 'Kosztuje dwadzieścia dolarów.' },
+        { word: 'fruit', polish: 'owoc', exampleEn: 'I eat fresh fruit every day.', examplePl: 'Codziennie jem świeże owoce.' },
+        { word: 'gift', polish: 'prezent', exampleEn: 'Thank you for the nice gift.', examplePl: 'Dziękuję za ładny prezent.' },
+        { word: 'high', polish: 'wysoki', exampleEn: 'The mountain is very high.', examplePl: 'Góra jest bardzo wysoka.' },
+        { word: 'illness', polish: 'choroba', exampleEn: 'He has a serious illness.', examplePl: 'Ma poważną chorobę.' },
+        { word: 'milk', polish: 'mleko', exampleEn: 'I drink milk with coffee.', examplePl: 'Piję mleko z kawą.' },
+        { word: 'not', polish: 'nie', exampleEn: 'I am not ready yet.', examplePl: 'Nie jestem jeszcze gotowy.' },
+        { word: 'piece', polish: 'kawałek', exampleEn: 'Can I have a piece of cake?', examplePl: 'Czy mogę dostać kawałek ciasta?' },
+        { word: 'protect', polish: 'ochraniać', exampleEn: 'We must protect the environment.', examplePl: 'Musimy chronić środowisko.' },
+        { word: 'race', polish: 'wyścigi', exampleEn: 'The car race was exciting.', examplePl: 'Wyścig samochodowy był ekscytujący.' },
+        { word: 'since', polish: 'od', exampleEn: 'I have lived here since 2015.', examplePl: 'Mieszkam tu od 2015 roku.' },
+        { word: 'slow', polish: 'powolny', exampleEn: 'The internet is very slow today.', examplePl: 'Internet jest dzisiaj bardzo wolny.' },
+        { word: 'smile', polish: 'uśmiech', exampleEn: 'She has a beautiful smile.', examplePl: 'Ma piękny uśmiech.' },
+        { word: 'ticket', polish: 'bilet', exampleEn: 'I bought a train ticket.', examplePl: 'Kupiłem bilet na pociąg.' },
+        { word: 'well', polish: 'dobrze', exampleEn: 'I feel well today.', examplePl: 'Czuję się dzisiaj dobrze.' }
+      ],
+
+ 24: [
+        { word: 'accident', polish: 'wypadek', exampleEn: 'There was a car accident.', examplePl: 'Był wypadek samochodowy.' },
+        { word: 'blood', polish: 'krew', exampleEn: 'He lost a lot of blood.', examplePl: 'Stracił dużo krwi.' },
+        { word: 'business', polish: 'biznes', exampleEn: 'He runs his own business.', examplePl: 'Prowadzi własny biznes.' },
+        { word: 'during', polish: 'w trakcie', exampleEn: 'We talked during the break.', examplePl: 'Rozmawialiśmy w trakcie przerwy.' },
+        { word: 'even', polish: 'nawet', exampleEn: 'Even my grandmother knows it.', examplePl: 'Nawet moja babcia to wie.' },
+        { word: 'floor', polish: 'podłoga', exampleEn: 'The floor is clean.', examplePl: 'Podłoga jest czysta.' },
+        { word: 'general', polish: 'ogólny', exampleEn: 'In general, I agree.', examplePl: 'Ogólnie rzecz biorąc, zgadzam się.' },
+        { word: 'choose', polish: 'wybierać', exampleEn: 'You can choose any color.', examplePl: 'Możesz wybrać dowolny kolor.' },
+        { word: 'inform', polish: 'poinformować', exampleEn: 'Please inform me about the change.', examplePl: 'Proszę poinformować mnie o zmianie.' },
+        { word: 'little', polish: 'mało, mały', exampleEn: 'I have very little time.', examplePl: 'Mam bardzo mało czasu.' },
+        { word: 'meeting', polish: 'spotkanie', exampleEn: 'We have a meeting at 10.', examplePl: 'Mamy spotkanie o 10.' },
+        { word: 'order', polish: 'zamówienie', exampleEn: 'I will order pizza.', examplePl: 'Zamówię pizzę.' },
+        { word: 'party', polish: 'przyjęcie', exampleEn: 'We had a birthday party.', examplePl: 'Mieliśmy przyjęcie urodzinowe.' },
+        { word: 'pink', polish: 'różowy', exampleEn: 'She is wearing a pink dress.', examplePl: 'Ma na sobie różową sukienkę.' },
+        { word: 'reply', polish: 'odpowiadać', exampleEn: 'Please reply to my email.', examplePl: 'Proszę odpowiedzieć na mojego maila.' },
+        { word: 'snow', polish: 'śnieg', exampleEn: 'It is snowing outside.', examplePl: 'Na zewnątrz pada śnieg.' },
+        { word: 'sugar', polish: 'cukier', exampleEn: 'Do you take sugar in your tea?', examplePl: 'Bierzesz cukier do herbaty?' },
+        { word: 'travel', polish: 'podróżować', exampleEn: 'I love to travel abroad.', examplePl: 'Lubię podróżować za granicę.' },
+        { word: 'virus', polish: 'wirus', exampleEn: 'He caught a virus.', examplePl: 'Złapał wirusa.' },
+        { word: 'watch', polish: 'zegarek, oglądać', exampleEn: 'I wear a watch every day. / I watch movies in the evening.', examplePl: 'Noszę zegarek codziennie. / Oglądam filmy wieczorem.' }
+      ],
+
+ 25: [
+        { word: 'another', polish: 'inny', exampleEn: 'I want another coffee.', examplePl: 'Chcę jeszcze jedną kawę.' },
+        { word: 'believe', polish: 'uwierzyć', exampleEn: 'I believe you.', examplePl: 'Wierzę ci.' },
+        { word: 'both', polish: 'oba, obie', exampleEn: 'Both options are good.', examplePl: 'Obie opcje są dobre.' },
+        { word: 'crazy', polish: 'zwariowany', exampleEn: 'This idea is crazy!', examplePl: 'Ten pomysł jest zwariowany!' },
+        { word: 'cup', polish: 'filiżanka', exampleEn: 'I drink coffee from a big cup.', examplePl: 'Piję kawę z dużej filiżanki.' },
+        { word: 'decide', polish: 'decydować', exampleEn: 'I need to decide quickly.', examplePl: 'Muszę szybko zdecydować.' },
+        { word: 'ever', polish: 'kiedykolwiek', exampleEn: 'Have you ever been to Paris?', examplePl: 'Czy kiedykolwiek byłeś w Paryżu?' },
+        { word: 'field', polish: 'pole', exampleEn: 'They play football in the field.', examplePl: 'Grają w piłkę na polu.' },
+        { word: 'heart', polish: 'serce', exampleEn: 'She has a kind heart.', examplePl: 'Ma dobre serce.' },
+        { word: 'imagine', polish: 'wyobrażać sobie', exampleEn: 'Imagine you are on a beach.', examplePl: 'Wyobraź sobie, że jesteś na plaży.' },
+        { word: 'line', polish: 'linia', exampleEn: 'There is a long line at the shop.', examplePl: 'W sklepie jest długa kolejka.' },
+        { word: 'meat', polish: 'mięso', exampleEn: 'I don\'t eat red meat.', examplePl: 'Nie jem czerwonego mięsa.' },
+        { word: 'over', polish: 'nad, ponad', exampleEn: 'The plane flew over the city.', examplePl: 'Samolot przeleciał nad miastem.' },
+        { word: 'pull', polish: 'ciągnąć', exampleEn: 'Pull the door, don\'t push.', examplePl: 'Ciągnij drzwi, nie pchaj.' },
+        { word: 'ring', polish: 'pierścionek', exampleEn: 'She wears a beautiful ring.', examplePl: 'Ona nosi piękny pierścionek.' },
+        { word: 'sell', polish: 'sprzedać', exampleEn: 'I want to sell my old car.', examplePl: 'Chcę sprzedać mój stary samochód.' },
+        { word: 'similar', polish: 'podobny', exampleEn: 'They look very similar.', examplePl: 'Wyglądają bardzo podobnie.' },
+        { word: 'speed', polish: 'prędkość', exampleEn: 'The car was driving at high speed.', examplePl: 'Samochód jechał z dużą prędkością.' },
+        { word: 'than', polish: 'niż', exampleEn: 'She is taller than me.', examplePl: 'Ona jest wyższa ode mnie.' },
+        { word: 'your', polish: 'twój', exampleEn: 'This is your book.', examplePl: 'To jest twoja książka.' }
+      ],
+ 26: [
+        { word: 'above', polish: 'powyżej', exampleEn: 'The plane flew above the clouds.', examplePl: 'Samolot leciał powyżej chmur.' },
+        { word: 'begin', polish: 'zaczynać', exampleEn: 'The lesson will begin at 9 o\'clock.', examplePl: 'Lekcja zacznie się o dziewiątej.' },
+        { word: 'century', polish: 'stulecie', exampleEn: 'We live in the 21st century.', examplePl: 'Żyjemy w XXI wieku.' },
+        { word: 'consider', polish: 'rozważać', exampleEn: 'I will consider your offer.', examplePl: 'Rozważę twoją ofertę.' },
+        { word: 'dangerous', polish: 'niebezpieczny', exampleEn: 'It is dangerous to drive fast.', examplePl: 'Jazda z dużą prędkością jest niebezpieczna.' },
+        { word: 'dark', polish: 'ciemny', exampleEn: 'It is dark outside.', examplePl: 'Na zewnątrz jest ciemno.' },
+        { word: 'exchange', polish: 'wymieniać', exampleEn: 'We can exchange phone numbers.', examplePl: 'Możemy wymienić się numerami telefonów.' },
+        { word: 'government', polish: 'rząd', exampleEn: 'The government made a new law.', examplePl: 'Rząd uchwalił nowe prawo.' },
+        { word: 'hear', polish: 'słyszeć', exampleEn: 'Can you hear the music?', examplePl: 'Słyszysz muzykę?' },
+        { word: 'jump', polish: 'skakać', exampleEn: 'The children love to jump.', examplePl: 'Dzieci uwielbiają skakać.' },
+        { word: 'material', polish: 'materiał', exampleEn: 'This material is very soft.', examplePl: 'Ten materiał jest bardzo miękki.' },
+        { word: 'near', polish: 'blisko', exampleEn: 'The school is near my house.', examplePl: 'Szkoła jest blisko mojego domu.' },
+        { word: 'past', polish: 'przeszłość', exampleEn: 'We should learn from the past.', examplePl: 'Powinniśmy uczyć się na przeszłości.' },
+        { word: 'produce', polish: 'produkować', exampleEn: 'This factory produces cars.', examplePl: 'Ta fabryka produkuje samochody.' },
+        { word: 'remove', polish: 'usunąć', exampleEn: 'Please remove your shoes.', examplePl: 'Proszę zdjąć buty.' },
+        { word: 'secret', polish: 'sekret', exampleEn: 'I will tell you a secret.', examplePl: 'Powiem ci sekret.' },
+        { word: 'song', polish: 'piosenka', exampleEn: 'This is my favorite song.', examplePl: 'To jest moja ulubiona piosenka.' },
+        { word: 'television', polish: 'telewizja', exampleEn: 'I watch television in the evening.', examplePl: 'Oglądam telewizję wieczorem.' },
+        { word: 'value', polish: 'wartość', exampleEn: 'This ring has great value.', examplePl: 'Ten pierścionek ma dużą wartość.' },
+        { word: 'when', polish: 'gdy, kiedy', exampleEn: 'Tell me when you are ready.', examplePl: 'Powiedz mi, kiedy jesteś gotowy.' }
+      ],
+
+ 27: [
+        { word: 'arm', polish: 'ramię', exampleEn: 'I broke my arm last year.', examplePl: 'Złamałem rękę w zeszłym roku.' },
+        { word: 'behind', polish: 'za', exampleEn: 'The cat is behind the door.', examplePl: 'Kot jest za drzwiami.' },
+        { word: 'case', polish: 'walizka, przypadek', exampleEn: 'I packed my suitcase. / In this case, we will wait.', examplePl: 'Spakowałem walizkę. / W tym przypadku poczekamy.' },
+        { word: 'collect', polish: 'zbierać', exampleEn: 'I collect stamps as a hobby.', examplePl: 'Zbieram znaczki jako hobby.' },
+        { word: 'draw', polish: 'rysować', exampleEn: 'She can draw very well.', examplePl: 'Ona bardzo dobrze rysuje.' },
+        { word: 'examine', polish: 'zbadać', exampleEn: 'The doctor will examine you.', examplePl: 'Lekarz cię zbada.' },
+        { word: 'fall', polish: 'spadać', exampleEn: 'Be careful not to fall.', examplePl: 'Uważaj, żeby nie upaść.' },
+        { word: 'grow', polish: 'rosnąć', exampleEn: 'Plants grow quickly in spring.', examplePl: 'Rośliny szybko rosną wiosną.' },
+        { word: 'immediately', polish: 'natychmiast', exampleEn: 'Call me immediately if you need help.', examplePl: 'Zadzwoń do mnie natychmiast, jeśli potrzebujesz pomocy.' },
+        { word: 'low', polish: 'niski', exampleEn: 'The price is very low.', examplePl: 'Cena jest bardzo niska.' },
+        { word: 'mind', polish: 'umysł', exampleEn: 'He has a brilliant mind.', examplePl: 'Ma genialny umysł.' },
+        { word: 'off', polish: 'wyłączony', exampleEn: 'Turn the light off please.', examplePl: 'Wyłącz światło proszę.' },
+        { word: 'pass', polish: 'przechodzić', exampleEn: 'We pass the park every day.', examplePl: 'Codziennie przechodzimy obok parku.' },
+        { word: 'radio', polish: 'radio', exampleEn: 'I listen to the radio in the car.', examplePl: 'Słucham radia w samochodzie.' },
+        { word: 'shoe', polish: 'but', exampleEn: 'I bought new shoes.', examplePl: 'Kupiłem nowe buty.' },
+        { word: 'station', polish: 'stacja', exampleEn: 'The train station is near.', examplePl: 'Stacja kolejowa jest blisko.' },
+        { word: 'sure', polish: 'pewny', exampleEn: 'Are you sure about this?', examplePl: 'Jesteś pewien?' },
+        { word: 'test', polish: 'test', exampleEn: 'We have a test tomorrow.', examplePl: 'Jutro mamy test.' },
+        { word: 'usual', polish: 'zwykły', exampleEn: 'This is my usual routine.', examplePl: 'To jest mój zwykły rytuał.' },
+        { word: 'while', polish: 'podczas', exampleEn: 'I read while I eat breakfast.', examplePl: 'Czytam podczas śniadania.' }
+      ],
+
+ 28: [
+        { word: 'ago', polish: 'temu', exampleEn: 'I saw him two days ago.', examplePl: 'Widziałem go dwa dni temu.' },
+        { word: 'along', polish: 'wzdłuż', exampleEn: 'We walked along the river.', examplePl: 'Spacerowaliśmy wzdłuż rzeki.' },
+        { word: 'bear', polish: 'niedźwiedź', exampleEn: 'We saw a bear in the forest.', examplePl: 'Zobaczyliśmy niedźwiedzia w lesie.' },
+        { word: 'condition', polish: 'stan', exampleEn: 'The car is in good condition.', examplePl: 'Samochód jest w dobrym stanie.' },
+        { word: 'direct', polish: 'bezpośredni', exampleEn: 'Please give me a direct answer.', examplePl: 'Proszę o bezpośrednią odpowiedź.' },
+        { word: 'edge', polish: 'brzeg', exampleEn: 'Don\'t stand on the edge.', examplePl: 'Nie stój na brzegu.' },
+        { word: 'fine', polish: 'w porządku', exampleEn: 'Everything is fine.', examplePl: 'Wszystko w porządku.' },
+        { word: 'half', polish: 'pół', exampleEn: 'I ate half of the cake.', examplePl: 'Zjadłem połowę ciasta.' },
+        { word: 'chicken', polish: 'kurczak', exampleEn: 'We had grilled chicken for dinner.', examplePl: 'Mieliśmy grillowanego kurczaka na obiad.' },
+        { word: 'increase', polish: 'zwiększać', exampleEn: 'They want to increase the price.', examplePl: 'Chcą zwiększyć cenę.' },
+        { word: 'magazine', polish: 'magazyn', exampleEn: 'I read a fashion magazine.', examplePl: 'Czytam magazyn modowy.' },
+        { word: 'nature', polish: 'natura', exampleEn: 'I love spending time in nature.', examplePl: 'Lubię spędzać czas na łonie natury.' },
+        { word: 'plate', polish: 'talerz', exampleEn: 'Put the food on the plate.', examplePl: 'Nałóż jedzenie na talerz.' },
+        { word: 'poor', polish: 'ubogi', exampleEn: 'He comes from a poor family.', examplePl: 'Pochodzi z biednej rodziny.' },
+        { word: 'respect', polish: 'szacunek', exampleEn: 'I have great respect for her.', examplePl: 'Mam dla niej wielki szacunek.' },
+        { word: 'sharp', polish: 'ostry', exampleEn: 'Be careful, the knife is sharp.', examplePl: 'Uważaj, nóż jest ostry.' },
+        { word: 'sometimes', polish: 'czasami', exampleEn: 'Sometimes I feel tired.', examplePl: 'Czasami czuję się zmęczony.' },
+        { word: 'still', polish: 'nadal', exampleEn: 'She is still sleeping.', examplePl: 'Ona nadal śpi.' },
+        { word: 'tall', polish: 'wysoki', exampleEn: 'He is very tall.', examplePl: 'On jest bardzo wysoki.' },
+        { word: 'would', polish: 'by', exampleEn: 'I would like some water.', examplePl: 'Chciałbym wody.' }
+      ],
+ 29: [
+        { word: 'add', polish: 'dodać', exampleEn: 'Please add some sugar.', examplePl: 'Proszę dodać trochę cukru.' },
+        { word: 'among', polish: 'pośród', exampleEn: 'She is among the best students.', examplePl: 'Ona jest pośród najlepszych uczniów.' },
+        { word: 'built', polish: 'wybudowany', exampleEn: 'The house was built in 1995.', examplePl: 'Dom został wybudowany w 1995 roku.' },
+        { word: 'common', polish: 'wspólny', exampleEn: 'This is a common mistake.', examplePl: 'To jest powszechny błąd.' },
+        { word: 'depend', polish: 'zależeć', exampleEn: 'It depends on the weather.', examplePl: 'To zależy od pogody.' },
+        { word: 'early', polish: 'wcześnie', exampleEn: 'I wake up early every day.', examplePl: 'Wstaję wcześnie codziennie.' },
+        { word: 'fly', polish: 'latać', exampleEn: 'Birds can fly.', examplePl: 'Ptaki potrafią latać.' },
+        { word: 'happen', polish: 'zdarzyć się', exampleEn: 'What happened yesterday?', examplePl: 'Co się stało wczoraj?' },
+        { word: 'check', polish: 'sprawdzić', exampleEn: 'Please check your email.', examplePl: 'Proszę sprawdzić maila.' },
+        { word: 'introduce', polish: 'przedstawiać', exampleEn: 'Let me introduce my friend.', examplePl: 'Pozwól, że przedstawię mojego przyjaciela.' },
+        { word: 'less', polish: 'mniej', exampleEn: 'I have less time than before.', examplePl: 'Mam mniej czasu niż wcześniej.' },
+        { word: 'mark', polish: 'znak', exampleEn: 'There is a mark on the wall.', examplePl: 'Na ścianie jest znak.' },
+        { word: 'patient', polish: 'cierpliwy', exampleEn: 'You need to be patient.', examplePl: 'Musisz być cierpliwy.' },
+        { word: 'perhaps', polish: 'być może', exampleEn: 'Perhaps we can meet tomorrow.', examplePl: 'Być może spotkamy się jutro.' },
+        { word: 'rise', polish: 'wzrost', exampleEn: 'The sun will rise soon.', examplePl: 'Słońce wkrótce wzejdzie.' },
+        { word: 'sense', polish: 'sens', exampleEn: 'This makes no sense.', examplePl: 'To nie ma sensu.' },
+        { word: 'short', polish: 'krótki', exampleEn: 'The movie is very short.', examplePl: 'Film jest bardzo krótki.' },
+        { word: 'state', polish: 'stan', exampleEn: 'What is the state of the project?', examplePl: 'Jaki jest stan projektu?' },
+        { word: 'turn', polish: 'skręcać', exampleEn: 'Turn left at the corner.', examplePl: 'Skręć w lewo na rogu.' },
+        { word: 'will', polish: 'wola, testament', exampleEn: 'She has a strong will.', examplePl: 'Ma silną wolę.' }
+      ],
+
+ 30: [
+        { word: 'act', polish: 'działać', exampleEn: 'You need to act quickly.', examplePl: 'Musisz działać szybko.' },
+        { word: 'appear', polish: 'pojawiać się', exampleEn: 'She appeared suddenly.', examplePl: 'Pojawiła się nagle.' },
+        { word: 'break', polish: 'przerwa', exampleEn: 'We have a short break now.', examplePl: 'Mamy teraz krótką przerwę.' },
+        { word: 'course', polish: 'kurs', exampleEn: 'I am taking an English course.', examplePl: 'Uczęszczam na kurs angielskiego.' },
+        { word: 'court', polish: 'sąd', exampleEn: 'The case went to court.', examplePl: 'Sprawa trafiła do sądu.' },
+        { word: 'discuss', polish: 'omawiać', exampleEn: 'We need to discuss this problem.', examplePl: 'Musimy omówić ten problem.' },
+        { word: 'effect', polish: 'efekt', exampleEn: 'The medicine had a good effect.', examplePl: 'Lek miał dobry efekt.' },
+        { word: 'form', polish: 'formularz', exampleEn: 'Please fill in this form.', examplePl: 'Proszę wypełnić ten formularz.' },
+        { word: 'hold', polish: 'trzymać', exampleEn: 'Hold my hand.', examplePl: 'Trzymaj mnie za rękę.' },
+        { word: 'insect', polish: 'owad', exampleEn: 'There are many insects in summer.', examplePl: 'Latem jest dużo owadów.' },
+        { word: 'mean', polish: 'oznaczać', exampleEn: 'What does this word mean?', examplePl: 'Co oznacza to słowo?' },
+        { word: 'once', polish: 'kiedyś', exampleEn: 'I once lived in London.', examplePl: 'Kiedyś mieszkałem w Londynie.' },
+        { word: 'purpose', polish: 'cel', exampleEn: 'What is the purpose of this meeting?', examplePl: 'Jaki jest cel tego spotkania?' },
+        { word: 'really', polish: 'naprawdę', exampleEn: 'Do you really think so?', examplePl: 'Naprawdę tak myślisz?' },
+        { word: 'ride', polish: 'jazda', exampleEn: 'I like to ride a bike.', examplePl: 'Lubię jeździć na rowerze.' },
+        { word: 'situation', polish: 'sytuacja', exampleEn: 'The situation is difficult.', examplePl: 'Sytuacja jest trudna.' },
+        { word: 'success', polish: 'powodzenie', exampleEn: 'Hard work leads to success.', examplePl: 'Ciężka praca prowadzi do sukcesu.' },
+        { word: 'though', polish: 'chociaż', exampleEn: 'Though it was raining, we went out.', examplePl: 'Chociaż padało, wyszliśmy.' },
+        { word: 'upon', polish: 'na', exampleEn: 'Once upon a time...', examplePl: 'Dawno, dawno temu...' },
+        { word: 'war', polish: 'wojna', exampleEn: 'The war ended many years ago.', examplePl: 'Wojna skończyła się wiele lat temu.' }
+      ],
+
+ 31: [
+        { word: 'afternoon', polish: 'popołudnie', exampleEn: 'We meet every afternoon.', examplePl: 'Spotykamy się co popołudnie.' },
+        { word: 'busy', polish: 'zajęty', exampleEn: 'I am very busy today.', examplePl: 'Jestem dzisiaj bardzo zajęty.' },
+        { word: 'coffee', polish: 'kawa', exampleEn: 'I drink coffee every morning.', examplePl: 'Piję kawę co rano.' },
+        { word: 'detail', polish: 'szczegół', exampleEn: 'Tell me every detail.', examplePl: 'Opowiedz mi każdy szczegół.' },
+        { word: 'especially', polish: 'szczególnie', exampleEn: 'I like this song especially.', examplePl: 'Lubię szczególnie tę piosenkę.' },
+        { word: 'finish', polish: 'skończyć', exampleEn: 'I need to finish my work.', examplePl: 'Muszę skończyć pracę.' },
+        { word: 'ground', polish: 'ziemia', exampleEn: 'The ball fell to the ground.', examplePl: 'Piłka spadła na ziemię.' },
+        { word: 'holiday', polish: 'wakacje', exampleEn: 'We are going on holiday next week.', examplePl: 'Jedziemy na wakacje w przyszłym tygodniu.' },
+        { word: 'choice', polish: 'wybór', exampleEn: 'You have a good choice.', examplePl: 'Masz dobry wybór.' },
+        { word: 'kitchen', polish: 'kuchnia', exampleEn: 'The kitchen is clean.', examplePl: 'Kuchnia jest czysta.' },
+        { word: 'lesson', polish: 'lekcja', exampleEn: 'This is an important lesson.', examplePl: 'To jest ważna lekcja.' },
+        { word: 'music', polish: 'muzyka', exampleEn: 'I love listening to music.', examplePl: 'Lubię słuchać muzyki.' },
+        { word: 'orange', polish: 'pomarańczowy', exampleEn: 'She is wearing an orange dress.', examplePl: 'Ma na sobie pomarańczową sukienkę.' },
+        { word: 'perfect', polish: 'doskonały', exampleEn: 'The weather is perfect today.', examplePl: 'Pogoda jest dzisiaj idealna.' },
+        { word: 'request', polish: 'prośba', exampleEn: 'I have a special request.', examplePl: 'Mam specjalną prośbę.' },
+        { word: 'season', polish: 'pora roku', exampleEn: 'Summer is my favorite season.', examplePl: 'Lato to moja ulubiona pora roku.' },
+        { word: 'sick', polish: 'chory', exampleEn: 'I feel sick today.', examplePl: 'Czuję się dzisiaj chory.' },
+        { word: 'tomorrow', polish: 'jutro', exampleEn: 'See you tomorrow!', examplePl: 'Do zobaczenia jutro!' },
+        { word: 'welcome', polish: 'witamy', exampleEn: 'Welcome to our school!', examplePl: 'Witamy w naszej szkole!' },
+        { word: 'yesterday', polish: 'wczoraj', exampleEn: 'I saw him yesterday.', examplePl: 'Widziałem go wczoraj.' }
+      ],
+ 32: [
+        { word: 'agree', polish: 'zgodzić się', exampleEn: 'I agree with you.', examplePl: 'Zgadzam się z tobą.' },
+        { word: 'bridge', polish: 'most', exampleEn: 'We crossed the bridge.', examplePl: 'Przeszliśmy przez most.' },
+        { word: 'cake', polish: 'ciasto', exampleEn: 'She baked a chocolate cake.', examplePl: 'Upiekła czekoladowe ciasto.' },
+        { word: 'customer', polish: 'klient', exampleEn: 'The customer is always right.', examplePl: 'Klient ma zawsze rację.' },
+        { word: 'date', polish: 'data', exampleEn: 'What is today\'s date?', examplePl: 'Jaki jest dzisiejszy dzień?' },
+        { word: 'enter', polish: 'wchodzić', exampleEn: 'Please enter the room.', examplePl: 'Proszę wejść do pokoju.' },
+        { word: 'future', polish: 'przyszłość', exampleEn: 'I am excited about the future.', examplePl: 'Jestem podekscytowany przyszłością.' },
+        { word: 'gentleman', polish: 'pan', exampleEn: 'He is a real gentleman.', examplePl: 'On jest prawdziwym dżentelmenem.' },
+        { word: 'hair', polish: 'włosy', exampleEn: 'She has long beautiful hair.', examplePl: 'Ma długie piękne włosy.' },
+        { word: 'image', polish: 'wizerunek', exampleEn: 'The company has a good image.', examplePl: 'Firma ma dobry wizerunek.' },
+        { word: 'language', polish: 'język', exampleEn: 'English is an important language.', examplePl: 'Angielski to ważny język.' },
+        { word: 'market', polish: 'rynek', exampleEn: 'I buy vegetables at the market.', examplePl: 'Kupuję warzywa na rynku.' },
+        { word: 'plane', polish: 'samolot', exampleEn: 'The plane is landing now.', examplePl: 'Samolot właśnie ląduje.' },
+        { word: 'private', polish: 'prywatny', exampleEn: 'This is a private conversation.', examplePl: 'To jest prywatna rozmowa.' },
+        { word: 'restaurant', polish: 'restauracja', exampleEn: 'We ate at a nice restaurant.', examplePl: 'Jedliśmy w miłej restauracji.' },
+        { word: 'size', polish: 'rozmiar', exampleEn: 'What size do you wear?', examplePl: 'Jaki rozmiar nosisz?' },
+        { word: 'sky', polish: 'niebo', exampleEn: 'The sky is clear today.', examplePl: 'Niebo jest dzisiaj bezchmurne.' },
+        { word: 'smart', polish: 'mądry', exampleEn: 'He is a very smart student.', examplePl: 'On jest bardzo mądrym uczniem.' },
+        { word: 'thank', polish: 'podziękować', exampleEn: 'Thank you for your help.', examplePl: 'Dziękuję za pomoc.' },
+        { word: 'weather', polish: 'pogoda', exampleEn: 'The weather is beautiful today.', examplePl: 'Pogoda jest dzisiaj piękna.' }
+      ],
+
+ 33: [
+        { word: 'actor', polish: 'aktor', exampleEn: 'He is a famous actor.', examplePl: 'On jest sławnym aktorem.' },
+        { word: 'bottle', polish: 'butelka', exampleEn: 'There is a bottle of water on the table.', examplePl: 'Na stole stoi butelka wody.' },
+        { word: 'cloth', polish: 'materiał', exampleEn: 'This cloth is very soft.', examplePl: 'Ten materiał jest bardzo miękki.' },
+        { word: 'coat', polish: 'płaszcz', exampleEn: 'It is cold, wear your coat.', examplePl: 'Jest zimno, włóż płaszcz.' },
+        { word: 'destroy', polish: 'zniszczyć', exampleEn: 'The fire destroyed the house.', examplePl: 'Ogień zniszczył dom.' },
+        { word: 'everywhere', polish: 'wszędzie', exampleEn: 'I looked everywhere for my keys.', examplePl: 'Szukałem kluczy wszędzie.' },
+        { word: 'finger', polish: 'palec', exampleEn: 'I hurt my finger.', examplePl: 'Skaleczyłem się w palec.' },
+        { word: 'guide', polish: 'przewodnik', exampleEn: 'The guide showed us the city.', examplePl: 'Przewodnik oprowadził nas po mieście.' },
+        { word: 'improve', polish: 'ulepszać', exampleEn: 'I want to improve my English.', examplePl: 'Chcę poprawić swój angielski.' },
+        { word: 'knife', polish: 'nóż', exampleEn: 'Be careful with the knife.', examplePl: 'Uważaj na nóż.' },
+        { word: 'large', polish: 'duży', exampleEn: 'They live in a large house.', examplePl: 'Mieszkają w dużym domu.' },
+        { word: 'mistake', polish: 'błąd', exampleEn: 'Everyone makes mistakes.', examplePl: 'Każdy popełnia błędy.' },
+        { word: 'ocean', polish: 'ocean', exampleEn: 'The Pacific Ocean is huge.', examplePl: 'Ocean Spokojny jest ogromny.' },
+        { word: 'plant', polish: 'roślina', exampleEn: 'I water the plants every day.', examplePl: 'Podlewam rośliny codziennie.' },
+        { word: 'repeat', polish: 'powtarzać', exampleEn: 'Please repeat the sentence.', examplePl: 'Proszę powtórzyć zdanie.' },
+        { word: 'salt', polish: 'sól', exampleEn: 'Add some salt to the soup.', examplePl: 'Dodaj trochę soli do zupy.' },
+        { word: 'special', polish: 'specjalny', exampleEn: 'Today is a special day.', examplePl: 'Dzisiaj jest specjalny dzień.' },
+        { word: 'teach', polish: 'nauczać', exampleEn: 'She teaches English.', examplePl: 'Ona uczy angielskiego.' },
+        { word: 'uncle', polish: 'wujek', exampleEn: 'My uncle lives in Kraków.', examplePl: 'Mój wujek mieszka w Krakowie.' },
+        { word: 'winter', polish: 'zima', exampleEn: 'I like winter sports.', examplePl: 'Lubię sporty zimowe.' }
+      ],
+
+ 34: [
+        { word: 'angry', polish: 'zły, wściekły', exampleEn: 'He is angry because he is late.', examplePl: 'Jest zły, ponieważ się spóźnił.' },
+        { word: 'article', polish: 'artykuł', exampleEn: 'I read an interesting article.', examplePl: 'Przeczytałem ciekawy artykuł.' },
+        { word: 'build', polish: 'budować', exampleEn: 'They want to build a new house.', examplePl: 'Chcą zbudować nowy dom.' },
+        { word: 'dirty', polish: 'brudny', exampleEn: 'My shoes are dirty.', examplePl: 'Moje buty są brudne.' },
+        { word: 'except', polish: 'z wyjątkiem', exampleEn: 'Everyone came except John.', examplePl: 'Wszyscy przyszli oprócz Johna.' },
+        { word: 'famous', polish: 'sławny', exampleEn: 'She is a famous singer.', examplePl: 'Ona jest sławną piosenkarką.' },
+        { word: 'gas', polish: 'gaz', exampleEn: 'The gas is very expensive.', examplePl: 'Gaz jest bardzo drogi.' },
+        { word: 'hotel', polish: 'hotel', exampleEn: 'We stayed in a nice hotel.', examplePl: 'Zatrzymaliśmy się w miłym hotelu.' },
+        { word: 'cheap', polish: 'tani', exampleEn: 'This shirt is very cheap.', examplePl: 'Ta koszula jest bardzo tania.' },
+        { word: 'interview', polish: 'wywiad', exampleEn: 'I have a job interview tomorrow.', examplePl: 'Jutro mam rozmowę kwalifikacyjną.' },
+        { word: 'moon', polish: 'księżyc', exampleEn: 'The moon is full tonight.', examplePl: 'Dzisiaj jest pełnia księżyca.' },
+        { word: 'nice', polish: 'miły', exampleEn: 'She is a very nice person.', examplePl: 'Ona jest bardzo miłą osobą.' },
+        { word: 'prepare', polish: 'przygotować', exampleEn: 'I need to prepare for the exam.', examplePl: 'Muszę się przygotować do egzaminu.' },
+        { word: 'prison', polish: 'więzienie', exampleEn: 'He spent two years in prison.', examplePl: 'Spędził dwa lata w więzieniu.' },
+        { word: 'rice', polish: 'ryż', exampleEn: 'I eat rice with vegetables.', examplePl: 'Jem ryż z warzywami.' },
+        { word: 'seem', polish: 'wydawać się', exampleEn: 'It seems difficult.', examplePl: 'Wydaje się trudne.' },
+        { word: 'skirt', polish: 'spódnica', exampleEn: 'She is wearing a red skirt.', examplePl: 'Ma na sobie czerwoną spódnicę.' },
+        { word: 'strange', polish: 'dziwny', exampleEn: 'This is a strange situation.', examplePl: 'To jest dziwna sytuacja.' },
+        { word: 'train', polish: 'pociąg', exampleEn: 'I go to work by train.', examplePl: 'Jadę do pracy pociągiem.' },
+        { word: 'warm', polish: 'ciepły', exampleEn: 'The weather is warm today.', examplePl: 'Dzisiaj jest ciepła pogoda.' }
+      ],
+ 35: [
+        { word: 'account', polish: 'konto', exampleEn: 'I have a bank account.', examplePl: 'Mam konto bankowe.' },
+        { word: 'bird', polish: 'ptak', exampleEn: 'The bird is singing.', examplePl: 'Ptak śpiewa.' },
+        { word: 'cloud', polish: 'chmura', exampleEn: 'There are many clouds in the sky.', examplePl: 'Na niebie jest dużo chmur.' },
+        { word: 'comfortable', polish: 'wygodny', exampleEn: 'This chair is very comfortable.', examplePl: 'To krzesło jest bardzo wygodne.' },
+        { word: 'damage', polish: 'uszkodzić', exampleEn: 'The storm damaged the roof.', examplePl: 'Burza uszkodziła dach.' },
+        { word: 'dust', polish: 'kurz', exampleEn: 'There is a lot of dust on the shelf.', examplePl: 'Na półce jest dużo kurzu.' },
+        { word: 'exercise', polish: 'ćwiczenie', exampleEn: 'I do exercise every morning.', examplePl: 'Ćwiczę co rano.' },
+        { word: 'favourite', polish: 'ulubiony', exampleEn: 'What is your favourite colour?', examplePl: 'Jaki jest twój ulubiony kolor?' },
+        { word: 'hospital', polish: 'szpital', exampleEn: 'She is in the hospital.', examplePl: 'Ona jest w szpitalu.' },
+        { word: 'joke', polish: 'żart', exampleEn: 'He told a funny joke.', examplePl: 'Opowiedział śmieszny żart.' },
+        { word: 'message', polish: 'wiadomość', exampleEn: 'I sent you a message.', examplePl: 'Wysłałem ci wiadomość.' },
+        { word: 'night', polish: 'noc', exampleEn: 'I sleep well at night.', examplePl: 'Dobrze śpię w nocy.' },
+        { word: 'paint', polish: 'farba', exampleEn: 'I need to buy some paint.', examplePl: 'Muszę kupić farbę.' },
+        { word: 'pleasure', polish: 'przyjemność', exampleEn: 'It is a pleasure to meet you.', examplePl: 'Miło cię poznać.' },
+        { word: 'relationship', polish: 'związek', exampleEn: 'They have a good relationship.', examplePl: 'Mają dobry związek.' },
+        { word: 'science', polish: 'nauka', exampleEn: 'I like science subjects.', examplePl: 'Lubię przedmioty ścisłe.' },
+        { word: 'serious', polish: 'poważny', exampleEn: 'This is a serious problem.', examplePl: 'To jest poważny problem.' },
+        { word: 'spend', polish: 'wydawać', exampleEn: 'I spend too much money.', examplePl: 'Wydaję za dużo pieniędzy.' },
+        { word: 'tired', polish: 'zmęczony', exampleEn: 'I am very tired today.', examplePl: 'Jestem dzisiaj bardzo zmęczony.' },
+        { word: 'wrong', polish: 'źle', exampleEn: 'I think you are wrong.', examplePl: 'Myślę, że się mylisz.' }
+      ],
+
+ 36: [
+        { word: 'amount', polish: 'ilość', exampleEn: 'The amount of money is high.', examplePl: 'Ilość pieniędzy jest duża.' },
+        { word: 'bank', polish: 'bank', exampleEn: 'I need to go to the bank.', examplePl: 'Muszę iść do banku.' },
+        { word: 'brown', polish: 'brązowy', exampleEn: 'She has brown eyes.', examplePl: 'Ma brązowe oczy.' },
+        { word: 'crowd', polish: 'tłum', exampleEn: 'There was a big crowd at the station.', examplePl: 'Na stacji był duży tłum.' },
+        { word: 'deal', polish: 'umowa', exampleEn: 'We made a good deal.', examplePl: 'Zawarliśmy dobrą umowę.' },
+        { word: 'engine', polish: 'silnik', exampleEn: 'The car engine is loud.', examplePl: 'Silnik samochodu jest głośny.' },
+        { word: 'follow', polish: 'podążać', exampleEn: 'Please follow me.', examplePl: 'Proszę za mną.' },
+        { word: 'chocolate', polish: 'czekolada', exampleEn: 'I love dark chocolate.', examplePl: 'Lubię gorzką czekoladę.' },
+        { word: 'individual', polish: 'indywidualny', exampleEn: 'Each person is an individual.', examplePl: 'Każda osoba jest indywidualnością.' },
+        { word: 'left', polish: 'lewo', exampleEn: 'Turn left at the traffic lights.', examplePl: 'Skręć w lewo na światłach.' },
+        { word: 'meal', polish: 'posiłek', exampleEn: 'We had a delicious meal.', examplePl: 'Zjedliśmy pyszny posiłek.' },
+        { word: 'oil', polish: 'olej', exampleEn: 'I cook with olive oil.', examplePl: 'Gotuję na oliwie z oliwek.' },
+        { word: 'pain', polish: 'ból', exampleEn: 'I have a stomach pain.', examplePl: 'Boli mnie brzuch.' },
+        { word: 'probably', polish: 'prawdopodobnie', exampleEn: 'It will probably rain tomorrow.', examplePl: 'Jutro prawdopodobnie będzie padać.' },
+        { word: 'replace', polish: 'zastąpić', exampleEn: 'We need to replace the old car.', examplePl: 'Musimy wymienić stary samochód.' },
+        { word: 'society', polish: 'społeczeństwo', exampleEn: 'This is a big problem in society.', examplePl: 'To jest duży problem w społeczeństwie.' },
+        { word: 'square', polish: 'plac', exampleEn: 'We met in the main square.', examplePl: 'Spotkaliśmy się na głównym placu.' },
+        { word: 'step', polish: 'krok', exampleEn: 'Take one step forward.', examplePl: 'Zrób jeden krok do przodu.' },
+        { word: 'temperature', polish: 'temperatura', exampleEn: 'The temperature is high today.', examplePl: 'Dzisiaj jest wysoka temperatura.' },
+        { word: 'university', polish: 'uniwersytet', exampleEn: 'She studies at the university.', examplePl: 'Studiuje na uniwersytecie.' }
+      ],
+
+ 37: [
+        { word: 'accept', polish: 'zaakceptować', exampleEn: 'I accept your invitation.', examplePl: 'Akceptuję twoje zaproszenie.' },
+        { word: 'advance', polish: 'postęp', exampleEn: 'Technology is making big advances.', examplePl: 'Technologia robi duże postępy.' },
+        { word: 'bag', polish: 'torba', exampleEn: 'I have a big shopping bag.', examplePl: 'Mam dużą torbę na zakupy.' },
+        { word: 'captain', polish: 'kapitan', exampleEn: 'The captain of the ship is experienced.', examplePl: 'Kapitan statku ma duże doświadczenie.' },
+        { word: 'centre', polish: 'środek', exampleEn: 'The city centre is busy.', examplePl: 'Centrum miasta jest zatłoczone.' },
+        { word: 'demand', polish: 'żądanie', exampleEn: 'There is high demand for this product.', examplePl: 'Jest duże zapotrzebowanie na ten produkt.' },
+        { word: 'enemy', polish: 'wróg', exampleEn: 'He has no enemies.', examplePl: 'Nie ma wrogów.' },
+        { word: 'factory', polish: 'fabryka', exampleEn: 'He works in a car factory.', examplePl: 'Pracuje w fabryce samochodów.' },
+        { word: 'hungry', polish: 'głodny', exampleEn: 'I am very hungry.', examplePl: 'Jestem bardzo głodny.' },
+        { word: 'illegal', polish: 'nielegalny', exampleEn: 'This action is illegal.', examplePl: 'Ta czynność jest nielegalna.' },
+        { word: 'law', polish: 'prawo', exampleEn: 'You must follow the law.', examplePl: 'Musisz przestrzegać prawa.' },
+        { word: 'nose', polish: 'nos', exampleEn: 'She has a small nose.', examplePl: 'Ma mały nos.' },
+        { word: 'petrol', polish: 'benzyna', exampleEn: 'The price of petrol is rising.', examplePl: 'Cena benzyny rośnie.' },
+        { word: 'proud', polish: 'dumny', exampleEn: 'I am proud of you.', examplePl: 'Jestem z ciebie dumny.' },
+        { word: 'responsible', polish: 'odpowiedzialny', exampleEn: 'He is a responsible person.', examplePl: 'On jest odpowiedzialną osobą.' },
+        { word: 'store', polish: 'sklep', exampleEn: 'I go to the store every day.', examplePl: 'Codziennie chodzę do sklepu.' },
+        { word: 'successful', polish: 'odnoszący sukcesy', exampleEn: 'She is a successful writer.', examplePl: 'Ona jest odnoszącą sukcesy pisarką.' },
+        { word: 'swim', polish: 'pływać', exampleEn: 'I like to swim in the sea.', examplePl: 'Lubię pływać w morzu.' },
+        { word: 'top', polish: 'góra', exampleEn: 'We climbed to the top of the mountain.', examplePl: 'Weszliśmy na szczyt góry.' },
+        { word: 'win', polish: 'zdobyć', exampleEn: 'I hope our team will win.', examplePl: 'Mam nadzieję, że nasza drużyna wygra.' }
+      ],
+ 38: [
+        { word: 'available', polish: 'dostępny', exampleEn: 'The book is available in the library.', examplePl: 'Książka jest dostępna w bibliotece.' },
+        { word: 'boat', polish: 'łódź', exampleEn: 'We crossed the river by boat.', examplePl: 'Przeprawiliśmy się przez rzekę łodzią.' },
+        { word: 'borrow', polish: 'pożyczać', exampleEn: 'Can I borrow your pen?', examplePl: 'Czy mogę pożyczyć twój długopis?' },
+        { word: 'coast', polish: 'wybrzeże', exampleEn: 'We spent the summer on the coast.', examplePl: 'Spędziliśmy lato na wybrzeżu.' },
+        { word: 'cream', polish: 'krem', exampleEn: 'I like ice cream.', examplePl: 'Lubię lody.' },
+        { word: 'design', polish: 'projekt', exampleEn: 'I like the design of this phone.', examplePl: 'Podoba mi się projekt tego telefonu.' },
+        { word: 'expression', polish: 'wyrażenie', exampleEn: 'He has a strange expression on his face.', examplePl: 'Ma dziwny wyraz twarzy.' },
+        { word: 'farm', polish: 'gospodarstwo rolne', exampleEn: 'They live on a big farm.', examplePl: 'Mieszkają na dużym gospodarstwie.' },
+        { word: 'history', polish: 'historia', exampleEn: 'I like learning history.', examplePl: 'Lubię uczyć się historii.' },
+        { word: 'injure', polish: 'zranić', exampleEn: 'He injured his leg playing football.', examplePl: 'Zranił nogę grając w piłkę.' },
+        { word: 'map', polish: 'mapa', exampleEn: 'We used a map to find the way.', examplePl: 'Użyliśmy mapy, żeby znaleźć drogę.' },
+        { word: 'obtain', polish: 'uzyskać', exampleEn: 'I need to obtain a visa.', examplePl: 'Muszę uzyskać wizę.' },
+        { word: 'peaceful', polish: 'spokojny', exampleEn: 'It is a peaceful place.', examplePl: 'To jest spokojne miejsce.' },
+        { word: 'practise', polish: 'ćwiczyć', exampleEn: 'You need to practise every day.', examplePl: 'Musisz ćwiczyć codziennie.' },
+        { word: 'recently', polish: 'niedawno', exampleEn: 'I saw her recently.', examplePl: 'Widziałem ją niedawno.' },
+        { word: 'shape', polish: 'kształt', exampleEn: 'The table has a round shape.', examplePl: 'Stół ma okrągły kształt.' },
+        { word: 'silver', polish: 'srebro', exampleEn: 'She wears a silver necklace.', examplePl: 'Ona nosi srebrny naszyjnik.' },
+        { word: 'smoke', polish: 'palić', exampleEn: 'It is forbidden to smoke here.', examplePl: 'Palenie jest tutaj zabronione.' },
+        { word: 'touch', polish: 'dotknąć', exampleEn: 'Don\'t touch the hot stove.', examplePl: 'Nie dotykaj gorącego pieca.' },
+        { word: 'wash', polish: 'myć', exampleEn: 'I wash my hands before eating.', examplePl: 'Myję ręce przed jedzeniem.' }
+      ],
+
+ 39: [
+        { word: 'advantage', polish: 'korzyść', exampleEn: 'This plan has many advantages.', examplePl: 'Ten plan ma wiele zalet.' },
+        { word: 'attack', polish: 'atak', exampleEn: 'The army attacked at night.', examplePl: 'Armia zaatakowała w nocy.' },
+        { word: 'butter', polish: 'masło', exampleEn: 'I spread butter on the bread.', examplePl: 'Posmarowałem chleb masłem.' },
+        { word: 'club', polish: 'klub', exampleEn: 'He is a member of the football club.', examplePl: 'Jest członkiem klubu piłkarskiego.' },
+        { word: 'college', polish: 'szkoła wyższa', exampleEn: 'She studies at college.', examplePl: 'Studiuje w szkole wyższej.' },
+        { word: 'degree', polish: 'stopień', exampleEn: 'He has a university degree.', examplePl: 'Ma dyplom uniwersytecki.' },
+        { word: 'escape', polish: 'ucieczka', exampleEn: 'The prisoner tried to escape.', examplePl: 'Więzień próbował uciec.' },
+        { word: 'gate', polish: 'brama', exampleEn: 'Please close the gate.', examplePl: 'Proszę zamknąć bramę.' },
+        { word: 'independent', polish: 'niezależny', exampleEn: 'She is very independent.', examplePl: 'Ona jest bardzo niezależna.' },
+        { word: 'listen', polish: 'słuchać', exampleEn: 'Listen to the music.', examplePl: 'Słuchaj muzyki.' },
+        { word: 'marry', polish: 'ożenić się / wyjść za mąż', exampleEn: 'They want to marry next year.', examplePl: 'Chcą się pobrać w przyszłym roku.' },
+        { word: 'object', polish: 'obiekt', exampleEn: 'What is this object?', examplePl: 'Co to za obiekt?' },
+        { word: 'path', polish: 'ścieżka', exampleEn: 'We walked along the forest path.', examplePl: 'Szliśmy leśną ścieżką.' },
+        { word: 'quiet', polish: 'cichy', exampleEn: 'The room is very quiet.', examplePl: 'Pokój jest bardzo cichy.' },
+        { word: 'refuse', polish: 'odrzucać', exampleEn: 'I refuse to accept this.', examplePl: 'Odrzucam to.' },
+        { word: 'subject', polish: 'przedmiot', exampleEn: 'What is your favourite subject?', examplePl: 'Jaki jest twój ulubiony przedmiot?' },
+        { word: 'supply', polish: 'dostawa', exampleEn: 'The shop has a good supply of food.', examplePl: 'Sklep ma dobrą dostawę jedzenia.' },
+        { word: 'taste', polish: 'smak', exampleEn: 'This food has a great taste.', examplePl: 'To jedzenie ma świetny smak.' },
+        { word: 'usually', polish: 'zwykle', exampleEn: 'I usually wake up at 7.', examplePl: 'Zwykle wstaję o siódmej.' },
+        { word: 'vegetable', polish: 'warzywo', exampleEn: 'I eat vegetables every day.', examplePl: 'Codziennie jem warzywa.' }
+      ],
+
+ 40: [
+        { word: 'arrange', polish: 'zorganizować', exampleEn: 'I will arrange the meeting.', examplePl: 'Zorganizuję spotkanie.' },
+        { word: 'below', polish: 'poniżej', exampleEn: 'The temperature is below zero.', examplePl: 'Temperatura jest poniżej zera.' },
+        { word: 'cigarette', polish: 'papieros', exampleEn: 'Smoking cigarettes is unhealthy.', examplePl: 'Palenie papierosów jest niezdrowe.' },
+        { word: 'cottage', polish: 'chata', exampleEn: 'They have a small cottage in the mountains.', examplePl: 'Mają małą chatę w górach.' },
+        { word: 'department', polish: 'departament', exampleEn: 'He works in the marketing department.', examplePl: 'Pracuje w dziale marketingu.' },
+        { word: 'earn', polish: 'zarabiać', exampleEn: 'I earn money by teaching.', examplePl: 'Zarabiam ucząc.' },
+        { word: 'front', polish: 'przód', exampleEn: 'The car is in front of the house.', examplePl: 'Samochód stoi przed domem.' },
+        { word: 'gentle', polish: 'delikatny', exampleEn: 'He has a gentle voice.', examplePl: 'Ma delikatny głos.' },
+        { word: 'hat', polish: 'kapelusz', exampleEn: 'He is wearing a black hat.', examplePl: 'Ma na sobie czarny kapelusz.' },
+        { word: 'instrument', polish: 'instrument', exampleEn: 'She plays the piano very well.', examplePl: 'Ona świetnie gra na pianinie.' },
+        { word: 'machine', polish: 'maszyna', exampleEn: 'This machine is very efficient.', examplePl: 'Ta maszyna jest bardzo wydajna.' },
+        { word: 'newspaper', polish: 'gazeta', exampleEn: 'I read the newspaper every morning.', examplePl: 'Czytam gazetę co rano.' },
+        { word: 'parcel', polish: 'paczka', exampleEn: 'I received a parcel from my family.', examplePl: 'Otrzymałem paczkę od rodziny.' },
+        { word: 'religion', polish: 'religia', exampleEn: 'People have different religions.', examplePl: 'Ludzie mają różne religie.' },
+        { word: 'repair', polish: 'naprawić', exampleEn: 'The mechanic will repair the car.', examplePl: 'Mechanik naprawi samochód.' },
+        { word: 'serve', polish: 'służyć', exampleEn: 'This restaurant serves excellent food.', examplePl: 'Ta restauracja serwuje doskonałe jedzenie.' },
+        { word: 'shoulder', polish: 'ramię', exampleEn: 'He put his hand on my shoulder.', examplePl: 'Położył mi rękę na ramieniu.' },
+        { word: 'trip', polish: 'wycieczka', exampleEn: 'We are planning a trip to the mountains.', examplePl: 'Planujemy wycieczkę w góry.' },
+        { word: 'village', polish: 'wioska', exampleEn: 'They live in a small village.', examplePl: 'Mieszkają w małej wiosce.' },
+        { word: 'wall', polish: 'ściana', exampleEn: 'There is a picture on the wall.', examplePl: 'Na ścianie wisi obraz.' }
+      ],
+ 41: [
+        { word: 'arrive', polish: 'przybyć', exampleEn: 'The train will arrive soon.', examplePl: 'Pociąg wkrótce przyjedzie.' },
+        { word: 'born', polish: 'urodzony', exampleEn: 'I was born in Poland.', examplePl: 'Urodziłem się w Polsce.' },
+        { word: 'clothes', polish: 'ubranie', exampleEn: 'She bought new clothes.', examplePl: 'Kupiła nowe ubrania.' },
+        { word: 'correct', polish: 'poprawny', exampleEn: 'Your answer is correct.', examplePl: 'Twoja odpowiedź jest poprawna.' },
+        { word: 'double', polish: 'podwójny', exampleEn: 'I booked a double room.', examplePl: 'Zarezerwowałem pokój dwuosobowy.' },
+        { word: 'English', polish: 'język angielski', exampleEn: 'I am learning English.', examplePl: 'Uczę się angielskiego.' },
+        { word: 'forget', polish: 'zapomnieć', exampleEn: 'Don\'t forget your keys.', examplePl: 'Nie zapomnij kluczy.' },
+        { word: 'goal', polish: 'cel', exampleEn: 'My goal is to speak English fluently.', examplePl: 'Moim celem jest płynne mówienie po angielsku.' },
+        { word: 'hate', polish: 'nienawidzić', exampleEn: 'I hate waking up early.', examplePl: 'Nienawidzę wstawać wcześnie.' },
+        { word: 'kill', polish: 'zabić', exampleEn: 'Be careful not to kill the plants.', examplePl: 'Uważaj, żeby nie zabić roślin.' },
+        { word: 'last', polish: 'ostatni', exampleEn: 'This is my last chance.', examplePl: 'To moja ostatnia szansa.' },
+        { word: 'main', polish: 'główny', exampleEn: 'What is the main reason?', examplePl: 'Jaki jest główny powód?' },
+        { word: 'pair', polish: 'para', exampleEn: 'I bought a new pair of shoes.', examplePl: 'Kupiłem nową parę butów.' },
+        { word: 'promise', polish: 'obietnica', exampleEn: 'I made a promise to my mother.', examplePl: 'Złożyłem obietnicę mamie.' },
+        { word: 'regular', polish: 'regularny', exampleEn: 'I have regular check-ups.', examplePl: 'Mam regularne badania kontrolne.' },
+        { word: 'somewhere', polish: 'gdzieś', exampleEn: 'I left my phone somewhere.', examplePl: 'Zostawiłem telefon gdzieś.' },
+        { word: 'space', polish: 'przestrzeń', exampleEn: 'There is enough space here.', examplePl: 'Jest tu wystarczająco dużo miejsca.' },
+        { word: 'these', polish: 'te', exampleEn: 'These books are mine.', examplePl: 'Te książki są moje.' },
+        { word: 'useful', polish: 'przydatny', exampleEn: 'This dictionary is very useful.', examplePl: 'Ten słownik jest bardzo przydatny.' },
+        { word: 'without', polish: 'bez', exampleEn: 'I can\'t live without coffee.', examplePl: 'Nie mogę żyć bez kawy.' }
+      ],
+
+ 42: [
+        { word: 'animal', polish: 'zwierzę', exampleEn: 'I love animals.', examplePl: 'Lubię zwierzęta.' },
+        { word: 'beer', polish: 'piwo', exampleEn: 'He drank a cold beer.', examplePl: 'Wypił zimne piwo.' },
+        { word: 'calm', polish: 'spokojny', exampleEn: 'Stay calm in difficult situations.', examplePl: 'Zachowaj spokój w trudnych sytuacjach.' },
+        { word: 'copy', polish: 'kopiować', exampleEn: 'Please copy this sentence.', examplePl: 'Proszę skopiować to zdanie.' },
+        { word: 'dish', polish: 'danie', exampleEn: 'This is my favourite dish.', examplePl: 'To jest moje ulubione danie.' },
+        { word: 'express', polish: 'wyrazić', exampleEn: 'How can I express my feelings?', examplePl: 'Jak mogę wyrazić swoje uczucia?' },
+        { word: 'foreign', polish: 'obcy', exampleEn: 'I like learning foreign languages.', examplePl: 'Lubię uczyć się obcych języków.' },
+        { word: 'guess', polish: 'odgadnąć', exampleEn: 'Can you guess my age?', examplePl: 'Potrafisz zgadnąć ile mam lat?' },
+        { word: 'husband', polish: 'mąż', exampleEn: 'Her husband is a doctor.', examplePl: 'Jej mąż jest lekarzem.' },
+        { word: 'lie', polish: 'kłamstwo', exampleEn: 'Don\'t tell a lie.', examplePl: 'Nie kłam.' },
+        { word: 'mine', polish: 'mój', exampleEn: 'This book is mine.', examplePl: 'Ta książka jest moja.' },
+        { word: 'opinion', polish: 'opinia', exampleEn: 'What is your opinion?', examplePl: 'Jakie jest twoje zdanie?' },
+        { word: 'passenger', polish: 'pasażer', exampleEn: 'The plane has 200 passengers.', examplePl: 'Samolot ma 200 pasażerów.' },
+        { word: 'press', polish: 'nacisnąć', exampleEn: 'Press the button.', examplePl: 'Naciśnij przycisk.' },
+        { word: 'rule', polish: 'reguła', exampleEn: 'You must follow the rules.', examplePl: 'Musisz przestrzegać zasad.' },
+        { word: 'sign', polish: 'znak', exampleEn: 'There is a stop sign ahead.', examplePl: 'Przed nami jest znak stop.' },
+        { word: 'support', polish: 'wsparcie', exampleEn: 'Thank you for your support.', examplePl: 'Dziękuję za wsparcie.' },
+        { word: 'those', polish: 'tamte', exampleEn: 'Those cars are expensive.', examplePl: 'Tamte samochody są drogie.' },
+        { word: 'wonderful', polish: 'wspaniały', exampleEn: 'We had a wonderful time.', examplePl: 'Mieliśmy wspaniały czas.' },
+        { word: 'year', polish: 'rok', exampleEn: 'I will visit you next year.', examplePl: 'Odwiedzę cię w przyszłym roku.' }
+      ],
+
+ 43: [
+        { word: 'afraid', polish: 'przestraszony', exampleEn: 'I am afraid of spiders.', examplePl: 'Boję się pająków.' },
+        { word: 'board', polish: 'deska', exampleEn: 'Write on the board please.', examplePl: 'Proszę napisać na tablicy.' },
+        { word: 'circle', polish: 'okrąg', exampleEn: 'Draw a circle.', examplePl: 'Narysuj okrąg.' },
+        { word: 'count', polish: 'liczyć', exampleEn: 'Can you count to one hundred?', examplePl: 'Potrafisz liczyć do stu?' },
+        { word: 'death', polish: 'śmierć', exampleEn: 'The news of his death was sad.', examplePl: 'Wiadomość o jego śmierci była smutna.' },
+        { word: 'discover', polish: 'odkryć', exampleEn: 'They discovered a new planet.', examplePl: 'Odkryli nową planetę.' },
+        { word: 'funny', polish: 'zabawny', exampleEn: 'He told a funny story.', examplePl: 'Opowiedział zabawną historię.' },
+        { word: 'guest', polish: 'gość', exampleEn: 'We have guests for dinner.', examplePl: 'Mamy gości na obiad.' },
+        { word: 'horse', polish: 'koń', exampleEn: 'She rides a horse every weekend.', examplePl: 'Jeździ na koniu w każdy weekend.' },
+        { word: 'lake', polish: 'jezioro', exampleEn: 'We swam in the lake.', examplePl: 'Pływaliśmy w jeziorze.' },
+        { word: 'modern', polish: 'nowoczesny', exampleEn: 'I like modern art.', examplePl: 'Lubię nowoczesną sztukę.' },
+        { word: 'necessary', polish: 'niezbędny', exampleEn: 'It is necessary to study hard.', examplePl: 'Niezbędne jest ciężkie uczenie się.' },
+        { word: 'plenty', polish: 'dużo', exampleEn: 'We have plenty of time.', examplePl: 'Mamy dużo czasu.' },
+        { word: 'profit', polish: 'zysk', exampleEn: 'The company made a big profit.', examplePl: 'Firma osiągnęła duży zysk.' },
+        { word: 'reduce', polish: 'zmniejszyć', exampleEn: 'We need to reduce costs.', examplePl: 'Musimy zmniejszyć koszty.' },
+        { word: 'share', polish: 'dzielić', exampleEn: 'Can I share this with you?', examplePl: 'Czy mogę się tym z tobą podzielić?' },
+        { word: 'steal', polish: 'kraść', exampleEn: 'It is wrong to steal.', examplePl: 'Kradzież jest zła.' },
+        { word: 'trust', polish: 'zaufanie', exampleEn: 'I trust my best friend.', examplePl: 'Ufam mojemu najlepszemu przyjacielowi.' },
+        { word: 'wish', polish: 'życzenie', exampleEn: 'Make a wish!', examplePl: 'Spełnij życzenie!' },
+        { word: 'young', polish: 'młody', exampleEn: 'She is still young.', examplePl: 'Ona jest jeszcze młoda.' }
+      ],
+ 44: [
+        { word: 'admire', polish: 'podziwiać', exampleEn: 'I admire her courage.', examplePl: 'Podziwiam jej odwagę.' },
+        { word: 'allow', polish: 'pozwalać', exampleEn: 'My parents allow me to go out.', examplePl: 'Rodzice pozwalają mi wychodzić.' },
+        { word: 'battle', polish: 'bitwa', exampleEn: 'It was an important battle.', examplePl: 'To była ważna bitwa.' },
+        { word: 'climb', polish: 'wspinać się', exampleEn: 'We climbed the mountain.', examplePl: 'Wspinaliśmy się na górę.' },
+        { word: 'complete', polish: 'kompletny', exampleEn: 'The work is almost complete.', examplePl: 'Praca jest prawie ukończona.' },
+        { word: 'divide', polish: 'podzielić', exampleEn: 'Divide the cake into eight pieces.', examplePl: 'Podziel ciasto na osiem kawałków.' },
+        { word: 'effort', polish: 'wysiłek', exampleEn: 'He made a big effort.', examplePl: 'Włożył dużo wysiłku.' },
+        { word: 'fresh', polish: 'świeży', exampleEn: 'I bought fresh bread.', examplePl: 'Kupiłem świeży chleb.' },
+        { word: 'hole', polish: 'otwór', exampleEn: 'There is a hole in my sock.', examplePl: 'Mam dziurę w skarpetce.' },
+        { word: 'indeed', polish: 'w rzeczy samej', exampleEn: 'Indeed, you are right.', examplePl: 'Rzeczywiście, masz rację.' },
+        { word: 'marriage', polish: 'małżeństwo', exampleEn: 'Their marriage is very happy.', examplePl: 'Ich małżeństwo jest bardzo szczęśliwe.' },
+        { word: 'outside', polish: 'na zewnątrz', exampleEn: 'It is cold outside.', examplePl: 'Na zewnątrz jest zimno.' },
+        { word: 'pleasant', polish: 'przyjemny', exampleEn: 'We had a pleasant evening.', examplePl: 'Mieliśmy przyjemny wieczór.' },
+        { word: 'point', polish: 'punkt', exampleEn: 'What is the main point?', examplePl: 'Jaki jest główny punkt?' },
+        { word: 'recent', polish: 'niedawny', exampleEn: 'This is a recent photo.', examplePl: 'To jest niedawne zdjęcie.' },
+        { word: 'secretary', polish: 'sekretarz', exampleEn: 'She works as a secretary.', examplePl: 'Pracuje jako sekretarka.' },
+        { word: 'sing', polish: 'śpiewać', exampleEn: 'She sings beautifully.', examplePl: 'Ona pięknie śpiewa.' },
+        { word: 'soft', polish: 'miękki', exampleEn: 'This pillow is very soft.', examplePl: 'Ta poduszka jest bardzo miękka.' },
+        { word: 'third', polish: 'trzeci', exampleEn: 'This is my third time here.', examplePl: 'To jest mój trzeci raz tutaj.' },
+        { word: 'various', polish: 'różny', exampleEn: 'There are various options.', examplePl: 'Istnieje wiele różnych opcji.' }
+      ],
+
+ 45: [
+        { word: 'adventure', polish: 'przygoda', exampleEn: 'We had an exciting adventure.', examplePl: 'Mieliśmy ekscytującą przygodę.' },
+        { word: 'although', polish: 'mimo że', exampleEn: 'Although it rained, we went out.', examplePl: 'Mimo że padało, wyszliśmy.' },
+        { word: 'bottom', polish: 'dół', exampleEn: 'The book is at the bottom of the bag.', examplePl: 'Książka jest na dnie torby.' },
+        { word: 'coin', polish: 'moneta', exampleEn: 'I found an old coin.', examplePl: 'Znalazłem starą monetę.' },
+        { word: 'comfort', polish: 'komfort', exampleEn: 'This chair gives great comfort.', examplePl: 'To krzesło daje duży komfort.' },
+        { word: 'drop', polish: 'upuścić', exampleEn: 'Don\'t drop the glass!', examplePl: 'Nie upuść szklanki!' },
+        { word: 'equal', polish: 'równy', exampleEn: 'All people are equal.', examplePl: 'Wszyscy ludzie są równi.' },
+        { word: 'gun', polish: 'pistolet', exampleEn: 'He has a gun for protection.', examplePl: 'Ma pistolet do ochrony.' },
+        { word: 'intelligent', polish: 'inteligentny', exampleEn: 'She is very intelligent.', examplePl: 'Ona jest bardzo inteligentna.' },
+        { word: 'join', polish: 'dołączyć', exampleEn: 'Do you want to join us?', examplePl: 'Chcesz do nas dołączyć?' },
+        { word: 'laugh', polish: 'śmiech', exampleEn: 'We had a good laugh.', examplePl: 'Dobrze się uśmialiśmy.' },
+        { word: 'middle', polish: 'środek', exampleEn: 'Stand in the middle.', examplePl: 'Stań na środku.' },
+        { word: 'perform', polish: 'wykonać', exampleEn: 'She will perform on stage.', examplePl: 'Wystąpi na scenie.' },
+        { word: 'plain', polish: 'równina', exampleEn: 'The land is flat and plain.', examplePl: 'Teren jest płaski i równinny.' },
+        { word: 'row', polish: 'rzad', exampleEn: 'Sit in the first row.', examplePl: 'Usiądź w pierwszym rzędzie.' },
+        { word: 'soldier', polish: 'żołnierz', exampleEn: 'The soldier is brave.', examplePl: 'Żołnierz jest odważny.' },
+        { word: 'surface', polish: 'powierzchnia', exampleEn: 'The surface is smooth.', examplePl: 'Powierzchnia jest gładka.' },
+        { word: 'thick', polish: 'gruby', exampleEn: 'The book is very thick.', examplePl: 'Książka jest bardzo gruba.' },
+        { word: 'until', polish: 'aż do', exampleEn: 'Wait until I come back.', examplePl: 'Czekaj aż wrócę.' },
+        { word: 'wild', polish: 'dziki', exampleEn: 'We saw wild animals in the forest.', examplePl: 'Widzieliśmy dzikie zwierzęta w lesie.' }
+      ],
+
+ 46: [
+        { word: 'attempt', polish: 'próba', exampleEn: 'This is my first attempt.', examplePl: 'To jest moja pierwsza próba.' },
+        { word: 'bill', polish: 'rachunek', exampleEn: 'Can I have the bill please?', examplePl: 'Poproszę rachunek.' },
+        { word: 'breathe', polish: 'oddychać', exampleEn: 'It is hard to breathe here.', examplePl: 'Trudno tu oddychać.' },
+        { word: 'cook', polish: 'gotować', exampleEn: 'I like to cook dinner.', examplePl: 'Lubię gotować obiad.' },
+        { word: 'defend', polish: 'bronić', exampleEn: 'He tried to defend his friend.', examplePl: 'Próbował bronić przyjaciela.' },
+        { word: 'fat', polish: 'gruby', exampleEn: 'This meat is too fat.', examplePl: 'To mięso jest zbyt tłuste.' },
+        { word: 'grey', polish: 'szary', exampleEn: 'The sky is grey today.', examplePl: 'Niebo jest dzisiaj szare.' },
+        { word: 'hot', polish: 'gorący', exampleEn: 'The coffee is very hot.', examplePl: 'Kawa jest bardzo gorąca.' },
+        { word: 'character', polish: 'postać', exampleEn: 'He has a strong character.', examplePl: 'Ma silny charakter.' },
+        { word: 'import', polish: 'import', exampleEn: 'The company imports goods.', examplePl: 'Firma importuje towary.' },
+        { word: 'lose', polish: 'stracić', exampleEn: 'Don\'t lose your keys.', examplePl: 'Nie zgub kluczy.' },
+        { word: 'mountain', polish: 'góra', exampleEn: 'We climbed the mountain.', examplePl: 'Wspinaliśmy się na górę.' },
+        { word: 'operation', polish: 'operacja', exampleEn: 'The operation was successful.', examplePl: 'Operacja się udała.' },
+        { word: 'prize', polish: 'nagroda', exampleEn: 'She won first prize.', examplePl: 'Wygrała pierwszą nagrodę.' },
+        { word: 'risk', polish: 'ryzyko', exampleEn: 'It is a big risk.', examplePl: 'To duże ryzyko.' },
+        { word: 'safe', polish: 'bezpieczny', exampleEn: 'The place is safe.', examplePl: 'To miejsce jest bezpieczne.' },
+        { word: 'suddenly', polish: 'nagle', exampleEn: 'It started raining suddenly.', examplePl: 'Nagle zaczęło padać.' },
+        { word: 'suit', polish: 'garnitur', exampleEn: 'He is wearing a black suit.', examplePl: 'Ma na sobie czarny garnitur.' },
+        { word: 'type', polish: 'rodzaj', exampleEn: 'What type of music do you like?', examplePl: 'Jaki rodzaj muzyki lubisz?' },
+        { word: 'wood', polish: 'drewno', exampleEn: 'The table is made of wood.', examplePl: 'Stół jest zrobiony z drewna.' }
+      ],
+ 47: [
+        { word: 'area', polish: 'powierzchnia, obszar', exampleEn: 'This is a large area.', examplePl: 'To jest duży obszar.' },
+        { word: 'asleep', polish: 'we śnie', exampleEn: 'The baby is asleep.', examplePl: 'Niemowlę śpi.' },
+        { word: 'bath', polish: 'kąpiel', exampleEn: 'I take a bath every evening.', examplePl: 'Biorę kąpiel co wieczór.' },
+        { word: 'careless', polish: 'niedbały', exampleEn: 'He is very careless.', examplePl: 'On jest bardzo niedbały.' },
+        { word: 'delay', polish: 'opóźnienie', exampleEn: 'The flight has a delay.', examplePl: 'Lot jest opóźniony.' },
+        { word: 'event', polish: 'zdarzenie', exampleEn: 'It was an important event.', examplePl: 'To było ważne wydarzenie.' },
+        { word: 'foot', polish: 'stopa', exampleEn: 'I hurt my foot.', examplePl: 'Skaleczyłem stopę.' },
+        { word: 'hide', polish: 'ukryć', exampleEn: 'Where did you hide the gift?', examplePl: 'Gdzie schowałeś prezent?' },
+        { word: 'chain', polish: 'łańcuch', exampleEn: 'The dog is on a chain.', examplePl: 'Pies jest na łańcuchu.' },
+        { word: 'international', polish: 'międzynarodowy', exampleEn: 'This is an international company.', examplePl: 'To jest międzynarodowa firma.' },
+        { word: 'match', polish: 'mecz', exampleEn: 'We watched the football match.', examplePl: 'Oglądaliśmy mecz piłki nożnej.' },
+        { word: 'nervous', polish: 'nerwowy', exampleEn: 'I feel nervous before exams.', examplePl: 'Czuję się nerwowo przed egzaminami.' },
+        { word: 'pity', polish: 'szkoda', exampleEn: 'What a pity!', examplePl: 'Jaka szkoda!' },
+        { word: 'prove', polish: 'okazać się', exampleEn: 'This will prove to be useful.', examplePl: 'To okaże się przydatne.' },
+        { word: 'raise', polish: 'podnieść', exampleEn: 'Please raise your hand.', examplePl: 'Proszę podnieść rękę.' },
+        { word: 'shut', polish: 'zamknąć', exampleEn: 'Shut the door please.', examplePl: 'Zamknij drzwi proszę.' },
+        { word: 'smell', polish: 'zapach', exampleEn: 'I like the smell of fresh bread.', examplePl: 'Lubię zapach świeżego chleba.' },
+        { word: 'straight', polish: 'prosto', exampleEn: 'Go straight ahead.', examplePl: 'Idź prosto przed siebie.' },
+        { word: 'trade', polish: 'handel', exampleEn: 'International trade is important.', examplePl: 'Międzynarodowy handel jest ważny.' },
+        { word: 'variety', polish: 'różnorodność', exampleEn: 'There is a great variety of food.', examplePl: 'Jest wielka różnorodność jedzenia.' }
+      ],
+
+ 48: [
+        { word: 'admit', polish: 'przyznać', exampleEn: 'I admit that I was wrong.', examplePl: 'Przyznaję, że się myliłem.' },
+        { word: 'attend', polish: 'uczęszczać', exampleEn: 'I attend English classes.', examplePl: 'Uczęszczam na lekcje angielskiego.' },
+        { word: 'branch', polish: 'gałąź', exampleEn: 'The tree has many branches.', examplePl: 'Drzewo ma wiele gałęzi.' },
+        { word: 'coal', polish: 'węgiel', exampleEn: 'They used coal for heating.', examplePl: 'Używali węgla do ogrzewania.' },
+        { word: 'consist', polish: 'składać się', exampleEn: 'The team consists of 11 players.', examplePl: 'Drużyna składa się z 11 zawodników.' },
+        { word: 'declare', polish: 'ogłosić', exampleEn: 'They declared the winner.', examplePl: 'Ogłosili zwycięzcę.' },
+        { word: 'exact', polish: 'dokładny', exampleEn: 'Give me the exact time.', examplePl: 'Podaj dokładną godzinę.' },
+        { word: 'farmer', polish: 'rolnik', exampleEn: 'The farmer works hard.', examplePl: 'Rolnik ciężko pracuje.' },
+        { word: 'instead', polish: 'zamiast', exampleEn: 'I drank tea instead of coffee.', examplePl: 'Wypiłem herbatę zamiast kawy.' },
+        { word: 'jacket', polish: 'kurtka', exampleEn: 'Wear your jacket, it is cold.', examplePl: 'Włóż kurtkę, jest zimno.' },
+        { word: 'leg', polish: 'noga', exampleEn: 'I broke my leg.', examplePl: 'Złamałem nogę.' },
+        { word: 'metal', polish: 'metal', exampleEn: 'This is made of metal.', examplePl: 'To jest zrobione z metalu.' },
+        { word: 'opposite', polish: 'naprzeciwko', exampleEn: 'The bank is opposite the shop.', examplePl: 'Bank jest naprzeciwko sklepu.' },
+        { word: 'pound', polish: 'funt', exampleEn: 'It costs ten pounds.', examplePl: 'Kosztuje dziesięć funtów.' },
+        { word: 'roll', polish: 'rolka', exampleEn: 'I need a roll of paper.', examplePl: 'Potrzebuję rolki papieru.' },
+        { word: 'score', polish: 'wynik', exampleEn: 'What is the final score?', examplePl: 'Jaki jest końcowy wynik?' },
+        { word: 'shoot', polish: 'strzelać', exampleEn: 'He can shoot very well.', examplePl: 'On bardzo dobrze strzela.' },
+        { word: 'speech', polish: 'przemówienie', exampleEn: 'She gave a great speech.', examplePl: 'Wygłosiła świetne przemówienie.' },
+        { word: 'toilet', polish: 'toaleta', exampleEn: 'Where is the toilet?', examplePl: 'Gdzie jest toaleta?' },
+        { word: 'whose', polish: 'którego', exampleEn: 'Whose book is this?', examplePl: 'Czyja to książka?' }
+      ],
+
+ 49: [
+        { word: 'attitude', polish: 'nastawienie', exampleEn: 'He has a positive attitude.', examplePl: 'Ma pozytywne nastawienie.' },
+        { word: 'brave', polish: 'odważny', exampleEn: 'She is very brave.', examplePl: 'Ona jest bardzo odważna.' },
+        { word: 'contain', polish: 'zawierać', exampleEn: 'The box contains toys.', examplePl: 'Pudełko zawiera zabawki.' },
+        { word: 'doubt', polish: 'wątpić', exampleEn: 'I doubt it will work.', examplePl: 'Wątpię, że to zadziała.' },
+        { word: 'experience', polish: 'doświadczenie', exampleEn: 'She has a lot of experience.', examplePl: 'Ma duże doświadczenie.' },
+        { word: 'flat', polish: 'mieszkanie', exampleEn: 'I live in a small flat.', examplePl: 'Mieszkam w małym mieszkaniu.' },
+        { word: 'guard', polish: 'strzec', exampleEn: 'The guard is at the door.', examplePl: 'Strażnik stoi przy drzwiach.' },
+        { word: 'heavy', polish: 'ciężki', exampleEn: 'This box is very heavy.', examplePl: 'To pudełko jest bardzo ciężkie.' },
+        { word: 'charge', polish: 'opłata', exampleEn: 'There is no charge for this.', examplePl: 'Za to nie ma opłaty.' },
+        { word: 'iron', polish: 'żelazo', exampleEn: 'The gate is made of iron.', examplePl: 'Brama jest zrobiona z żelaza.' },
+        { word: 'medicine', polish: 'medycyna', exampleEn: 'He studies medicine.', examplePl: 'Studiuje medycynę.' },
+        { word: 'noise', polish: 'hałas', exampleEn: 'There is too much noise.', examplePl: 'Jest za dużo hałasu.' },
+        { word: 'politics', polish: 'polityka', exampleEn: 'I am not interested in politics.', examplePl: 'Nie interesuję się polityką.' },
+        { word: 'pour', polish: 'wlać', exampleEn: 'Pour some water please.', examplePl: 'Wlej trochę wody proszę.' },
+        { word: 'rush', polish: 'pędzić', exampleEn: 'Don\'t rush, we have time.', examplePl: 'Nie spiesz się, mamy czas.' },
+        { word: 'smooth', polish: 'gładki', exampleEn: 'The surface is smooth.', examplePl: 'Powierzchnia jest gładka.' },
+        { word: 'spread', polish: 'rozprzestrzeniać się', exampleEn: 'The news spread quickly.', examplePl: 'Wiadomość szybko się rozeszła.' },
+        { word: 'suggest', polish: 'sugerować', exampleEn: 'I suggest we go home.', examplePl: 'Sugeruję, żebyśmy wrócili do domu.' },
+        { word: 'trouble', polish: 'kłopot', exampleEn: 'I am in trouble.', examplePl: 'Mam kłopoty.' },
+        { word: 'west', polish: 'zachód', exampleEn: 'The sun sets in the west.', examplePl: 'Słońce zachodzi na zachodzie.' }
+      ],
+
+ 50: [
+        { word: 'average', polish: 'średni', exampleEn: 'The average temperature is 20 degrees.', examplePl: 'Średnia temperatura wynosi 20 stopni.' },
+        { word: 'belong', polish: 'należeć', exampleEn: 'This book belongs to me.', examplePl: 'Ta książka należy do mnie.' },
+        { word: 'certainly', polish: 'na pewno', exampleEn: 'I will certainly come.', examplePl: 'Na pewno przyjdę.' },
+        { word: 'crime', polish: 'przestępstwo', exampleEn: 'Crime is a big problem.', examplePl: 'Przestępczość jest dużym problemem.' },
+        { word: 'duty', polish: 'obowiązek', exampleEn: 'It is my duty to help.', examplePl: 'To mój obowiązek pomóc.' },
+        { word: 'either', polish: 'zarówno', exampleEn: 'Either you or I will go.', examplePl: 'Albo ty, albo ja pójdziemy.' },
+        { word: 'fail', polish: 'zawieść', exampleEn: 'I don\'t want to fail the exam.', examplePl: 'Nie chcę oblać egzaminu.' },
+        { word: 'health', polish: 'zdrowie', exampleEn: 'Health is the most important thing.', examplePl: 'Zdrowie jest najważniejsze.' },
+        { word: 'influence', polish: 'wpływ', exampleEn: 'He has a big influence on me.', examplePl: 'Ma na mnie duży wpływ.' },
+        { word: 'leader', polish: 'lider', exampleEn: 'She is a natural leader.', examplePl: 'Ona jest naturalnym liderem.' },
+        { word: 'measure', polish: 'pomiar', exampleEn: 'We need to measure the room.', examplePl: 'Musimy zmierzyć pokój.' },
+        { word: 'offer', polish: 'oferta', exampleEn: 'They made me a good offer.', examplePl: 'Złożyli mi dobrą ofertę.' },
+        { word: 'pile', polish: 'stos', exampleEn: 'There is a pile of books.', examplePl: 'Jest stos książek.' },
+        { word: 'regard', polish: 'wzgląd', exampleEn: 'I regard him as a friend.', examplePl: 'Uważam go za przyjaciela.' },
+        { word: 'rough', polish: 'szorstki', exampleEn: 'The surface is rough.', examplePl: 'Powierzchnia jest szorstka.' },
+        { word: 'series', polish: 'seria', exampleEn: 'I watched a new TV series.', examplePl: 'Obejrzałem nowy serial.' },
+        { word: 'spoil', polish: 'zepsuć', exampleEn: 'Don\'t spoil the surprise.', examplePl: 'Nie zepsuj niespodzianki.' },
+        { word: 'spot', polish: 'miejsce', exampleEn: 'This is a nice spot.', examplePl: 'To miłe miejsce.' },
+        { word: 'thin', polish: 'chudy', exampleEn: 'He is tall and thin.', examplePl: 'Jest wysoki i chudy.' },
+        { word: 'vote', polish: 'głosować', exampleEn: 'I will vote in the election.', examplePl: 'Będę głosował w wyborach.' }
       ]
     };
 
@@ -379,7 +1420,9 @@
       currentCardSide: 'front',
       lastSession: null,
       streak: 0,
-      lastActiveDate: null
+      lastActiveDate: null,
+      reviewQueue: [],
+      reviewQueueIndex: 0
     };
 
     function createCard(lessonId, word, polish, exampleEn = null, examplePl = null) {
@@ -443,14 +1486,12 @@
     seedLessonData();
 
     const lessonSelect = document.getElementById('lessonSelect');
-    const learnBtn = document.getElementById('learnBtn');
     const reviewBtn = document.getElementById('reviewBtn');
     const wordText = document.getElementById('wordText');
     const sentenceText = document.getElementById('sentenceText');
     const translationText = document.getElementById('translationText');
     const sentencePlText = document.getElementById('sentencePlText');
     const cardLabel = document.getElementById('cardLabel');
-    const reviewInfo = document.getElementById('reviewInfo');
     const cardFront = document.getElementById('cardFront');
     const cardBack = document.getElementById('cardBack');
     const ratingRow = document.getElementById('ratingRow');
@@ -508,13 +1549,30 @@
       const streak = state.streak || 0;
       statsContainer.innerHTML = `
         <div class="stat"><strong>${learned}</strong><span>nauczone</span></div>
-        <div class="stat"><strong>${dueNow}</strong><span>do dziś</span></div>
+        <div class="stat"><strong>${dueNow}</strong><span>do powtórki</span></div>
         <div class="stat"><strong>${streak}</strong><span>dni z rzędu</span></div>
         <div class="stat"><strong>${allCards.length}</strong><span>kart</span></div>
       `;
     }
 
     function computeProgress() {
+      if (state.mode === 'review') {
+        const queue = Array.isArray(state.reviewQueue) ? state.reviewQueue : [];
+        const total = queue.length;
+        if (!total) {
+          progressFill.style.width = '100%';
+          lessonStatus.textContent = 'Brak zaległych kart';
+          return;
+        }
+
+        const currentIndex = Math.min(total - 1, Math.max(0, state.reviewQueueIndex || 0));
+        const percent = Math.round((currentIndex / total) * 100);
+        const remaining = Math.max(0, total - currentIndex);
+        progressFill.style.width = `${percent}%`;
+        lessonStatus.textContent = `${remaining} kart${remaining === 1 ? '' : 'y'} do powtórki`;
+        return;
+      }
+
       const lesson = getLesson(state.selectedLessonId);
       const cards = lesson?.cards || [];
       const learned = cards.filter((card) => card.repetitions >= 1).length;
@@ -572,7 +1630,6 @@
       translationText.textContent = '';
       sentencePlText.textContent = '';
       cardLabel.textContent = 'Pusty stan';
-      reviewInfo.textContent = '';
       cardBox.classList.remove('flipped');
       ratingRow.classList.add('hidden');
       speakBtn.disabled = true;
@@ -586,12 +1643,19 @@
         showEmptyCard('Wybierz inną lekcję lub dodaj słówka ręcznie.');
         return;
       }
+
+      if (state.mode === 'review' && Array.isArray(state.reviewQueue)) {
+        const currentIndex = state.reviewQueue.findIndex((queueCard) => queueCard.id === card.id);
+        if (currentIndex >= 0) {
+          state.reviewQueueIndex = currentIndex;
+        }
+      }
+
       wordText.textContent = card.word;
       sentenceText.textContent = card.exampleEn;
       translationText.textContent = `${card.polish}`;
       sentencePlText.textContent = card.examplePl;
       cardLabel.textContent = state.mode === 'learn' ? 'Nowa karta' : 'Do powtórki';
-      reviewInfo.textContent = getReviewText(card);
       cardBox.classList.remove('flipped');
       cardInner.style.transform = '';
       ratingRow.classList.remove('hidden');
@@ -600,6 +1664,7 @@
       state.currentCardId = card.id;
       state.currentCardSide = 'front';
       sessionStatus.textContent = `Karta ${card.word} • ${getLesson(card.lessonId)?.title || 'Lekcja'}`;
+      computeProgress();
       cardBox.classList.remove('fade-in');
       void cardBox.offsetWidth;
       cardBox.classList.add('fade-in');
@@ -610,14 +1675,21 @@
       return cards.find((card) => (card.repetitions || 0) < 1) || null;
     }
 
-    function getNextCardForReview() {
+    function getReviewQueue() {
       const now = Date.now();
-      const allCards = getAllCards();
-      return allCards.filter((card) => card.due && card.due <= now).sort((a, b) => a.due - b.due)[0] || null;
+      return getAllCards()
+        .filter((card) => card.due && card.due <= now)
+        .sort((a, b) => a.due - b.due);
+    }
+
+    function getNextCardForReview() {
+      return getReviewQueue()[0] || null;
     }
 
     function startLearning() {
       state.mode = 'learn';
+      state.reviewQueue = [];
+      state.reviewQueueIndex = 0;
       state.selectedLessonId = Number(lessonSelect.value);
       const lesson = getLesson(state.selectedLessonId);
       const card = getNextCardForLearning(state.selectedLessonId);
@@ -636,10 +1708,13 @@
 
     function startReview() {
       state.mode = 'review';
-      const card = getNextCardForReview();
+      state.reviewQueue = getReviewQueue();
+      state.reviewQueueIndex = 0;
+      const card = state.reviewQueue[0] || null;
       if (!card) {
         sessionStatus.textContent = 'Brak zaległych kart. Świetnie!';
         showEmptyCard('Brak zaległych kart. Świetnie!');
+        computeProgress();
         return;
       }
       state.selectedLessonId = card.lessonId;
@@ -765,7 +1840,6 @@
       startLearning();
     });
 
-    learnBtn.addEventListener('click', startLearning);
     reviewBtn.addEventListener('click', startReview);
     cardBox.addEventListener('click', flipCard);
     speakBtn.addEventListener('click', (event) => { event.stopPropagation(); speakWord(); });
